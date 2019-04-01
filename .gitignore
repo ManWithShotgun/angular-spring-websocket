@@ -1,0 +1,17 @@
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+tutorial-web/src/main/web/dist
+tutorial-web/src/main/web/node_modules
+tutorial-web/src/main/web/node
+
+pythia/pythia8226_export/
+pythia/pythia_sh/
