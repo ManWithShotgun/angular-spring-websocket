@@ -63,3 +63,17 @@ ERROR in ./node_modules/stompjs/lib/stomp-node.js
 Module not found: Error: Can't resolve 'net' in 'D:\MyPrograms\Java\_spring\angular-spring-websocket\tutorial-web\src\main\web\node_modules\stompjs\lib'
 ``` 
 Solution: `npm i net -S`
+
+4. 
+```console
+Uncaught ReferenceError: global is not defined
+    at Object../node_modules/sockjs-client/lib/utils/browser-crypto.js (browser-crypto.js:3)
+```
+Solution: [link](https://github.com/sockjs/sockjs-client/issues/439#issuecomment-398032809)
+
+As header for `index.html`
+```html
+<script>
+    var global = window;
+</script>
+```
