@@ -40,3 +40,26 @@ Run frontend:
 **use proxy to backend port**
 1. `npm run build` or `ng build --prod --build-optimizer=false`
 2. `npm start` or `ng serve --proxy-config proxy.conf.json`
+
+---
+# # Spring Boot with WebSockets
+
+[View tutorial on Medium](https://medium.com/oril/spring-boot-websockets-angular-5-f2f4b1c14cee)
+
+---
+# # Angular
+
+0. npm install -g @angular/cli
+
+1. Cannot find module '@angular-devkit/core'
+solve [link](https://stackoverflow.com/questions/48394003/cannot-find-module-angular-devkit-core/48394014#48394014)
+
+2. sockjs_client_1.default is not a constructor
+solve [link](https://github.com/angular/angular-cli/issues/9243)
+
+3. `ng build` failure
+```shell
+ERROR in ./node_modules/stompjs/lib/stomp-node.js
+Module not found: Error: Can't resolve 'net' in 'D:\MyPrograms\Java\_spring\angular-spring-websocket\tutorial-web\src\main\web\node_modules\stompjs\lib'
+``` 
+Solution: `npm i net -S`
