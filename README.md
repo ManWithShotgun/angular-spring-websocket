@@ -49,6 +49,11 @@ Run frontend:
 ---
 # # Angular
 
+TODO:
+1. use `RxJS`
+2. use `async await`
+
+Issues:
 0. npm install -g @angular/cli
 
 1. Cannot find module '@angular-devkit/core'
