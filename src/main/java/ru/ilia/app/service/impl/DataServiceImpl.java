@@ -1,9 +1,11 @@
 package ru.ilia.app.service.impl;
 
+import org.springframework.stereotype.Service;
 import ru.ilia.app.service.DataService;
 
 import java.util.HashMap;
 
+@Service
 public class DataServiceImpl implements DataService {
 
     private HashMap<String, HashMap<String, String>> database = new HashMap<>();
@@ -58,7 +60,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public String getResult(String ksi, String mass) {
-        return null;
+        return database.get(ksi).get(mass);
     }
 
     @Override
