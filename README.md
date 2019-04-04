@@ -47,6 +47,13 @@ Run frontend:
 [View tutorial on Medium](https://medium.com/oril/spring-boot-websockets-angular-5-f2f4b1c14cee)
 
 ---
+# # Spring
+
+TODO:
+1. use `RxJava`
+2. use Swagger [as for the project](https://github.com/ManWithShotgun/spring-boot-dynamodb)
+
+---
 # # Angular
 
 TODO:
@@ -82,3 +89,9 @@ As header for `index.html`
     var global = window;
 </script>
 ```
+
+5. ERROR in node_modules/rxjs/internal/types.d.ts(81,44): error TS1005: ';' expected.
+
+Resolution: [source](https://stackoverflow.com/a/54529119)
+5.1 Go to `package.json` and modify `"rxjs": "^6.0.0"` to `"rxjs": "6.0.0"`
+5.2 `npm update`
