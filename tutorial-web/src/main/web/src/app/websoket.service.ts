@@ -16,7 +16,7 @@ export class WebsoketService {
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe("/chat", (message) => {
+      that.stompClient.subscribe("/user/chat/reply", (message) => {
         if(message.body) {
           // $(".chat").append("<div class='message'>"+message.body+"</div>")
           console.log(message.body);
