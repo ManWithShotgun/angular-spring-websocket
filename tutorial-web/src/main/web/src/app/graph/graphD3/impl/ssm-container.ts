@@ -11,24 +11,27 @@ export class SSMContainer {
     private static LEGEND_START_Y = 150;
     private static LEGEND_STEP_Y = 20;
 
-    private lines: SSMLine[];
+    private lines: SSMLine[] = [];
 
-    constructor(linesConf: any[]) {
+    constructor() {
         SSMContainer.context = this;
-        this.lines = linesConf.map((conf, i) => {
-            conf.interpolate = SSMContainer.INTORPOLATE;
-            conf.class = SSMContainer.LINE_CLASS;
-            // set text config
-            conf.text.class = SSMContainer.TEXT_CLASS; 
-            if (i === 0) {
-                conf.text.urlZ = true;
-            }
-            // set legend config
-            conf.legend.x = SSMContainer.LEGEND_START_X;
-            conf.legend.y = SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * i;
-            conf.legend.class = SSMContainer.LEGEND_CLASS;
-            return new SSMLine(conf);
-        });
+    }
+
+    public addLine(conf) {
+        let lineNumber = this.lines.length
+        conf.interpolate = SSMContainer.INTORPOLATE;
+        conf.class = SSMContainer.LINE_CLASS;
+        // set text config
+        conf.text.class = SSMContainer.TEXT_CLASS; 
+        if (lineNumber === 0) {
+            conf.text.urlZ = true;
+        }
+        // set legend config
+        conf.legend.x = SSMContainer.LEGEND_START_X;
+        conf.legend.y = SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * lineNumber;
+        conf.legend.class = SSMContainer.LEGEND_CLASS;
+        let line = new SSMLine(conf);
+        this.lines.push(line);
     }
 
     public static updateX(x0) {

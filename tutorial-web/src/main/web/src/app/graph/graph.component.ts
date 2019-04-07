@@ -137,9 +137,35 @@ export class Graph {
             [4989.81065225887, 0.00189836394573680]
           ];
 
-        let main: MainGraph = new MainGraph("div#svg");
-        main.init(dataSsm001, dataSsm0002, dataRef);
+        let ssmData = [{
+          data: dataSsm001,
+          render: true,
+          legend: {
+              text: 'ssm 0.01:'
+          },
+          text: {
+              text: '001',
+              x: 170,
+              y: 140
+          }
+      },
+      {
+          data: dataSsm0002,
+          render: true,
+          legend: {
+              text: 'ssm 0.002:'
+          },
+          text: {
+              text: '0002',
+              x: 270,
+              y: 140
+          }
+      }];
 
+        let main: MainGraph = new MainGraph("div#svg");
+        main.init(dataRef);
+        main.addLineToContainer(ssmData[0]);
+        main.addLineToContainer(ssmData[1]);
     }
 }
 

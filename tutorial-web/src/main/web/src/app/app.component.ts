@@ -21,7 +21,8 @@ export class AppComponent implements OnInit{
   }
 
   sendMessage(message): void {
-    this.websoketService.sendMessage("qqq");
-    this.websoketService.sendMessage("www");
+    // this.websoketService.sendMessage("qqq");
+    // this.websoketService.sendMessage("www");
+    this.websoketService.getData("0.001", "1044");
   }
 }

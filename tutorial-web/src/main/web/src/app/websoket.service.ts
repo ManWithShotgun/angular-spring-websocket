@@ -16,17 +16,28 @@ export class WebsoketService {
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe("/user/chat/reply", (message) => {
-        if(message.body) {
-          // $(".chat").append("<div class='message'>"+message.body+"</div>")
-          console.log(message.body);
-        }
-      });
+      that.stompClient.subscribe("/user/chat/reply", that.receiveMessage);
+      that.stompClient.subscribe("/user/data/reply", that.receiveData);
     });
+  }
+
+  receiveData(response): void {
+    if(response.body) {
+      console.log(response.body);
+    }
+  }
+
+  receiveMessage(response): void {
+    if(response.body) {
+      console.log(response.body);
+    }
   }
 
   sendMessage(message): void {
     this.stompClient.send("/app/send/message" , {}, message);
-    // $('#input').val('');
+  }
+
+  getData(ksi, mass): void {
+    this.stompClient.send("/app/get-data" , {}, JSON.stringify({ksi, mass}));
   }
 }

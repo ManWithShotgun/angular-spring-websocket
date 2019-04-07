@@ -12,6 +12,7 @@ export class MainGraph {
     public static logPen;
     private domainX = [1, 5000];
     private domainY = [Math.pow(10, -4), Math.pow(10, 1)];
+    private container: SSMContainer;
 
     // example:
     // {
@@ -34,7 +35,7 @@ export class MainGraph {
         // create promise chain and end set .then(init)
     }
 
-    public init(dataSsm1, dataSsm2, dataRef) {
+    public init(dataRef) {
         let margin = {top: 20, right: 30, bottom: 60, left: 60},
             width = 760 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
@@ -117,36 +118,17 @@ export class MainGraph {
             href: 'https://cdn1.savepice.ru/uploads/2017/11/9/23a327011c5f481a636de5fefb242ca0-full.png'
         });
 
-        let ssmData = [{
-            data: dataSsm1,
-            render: true,
-            legend: {
-                text: 'ssm 0.01:'
-            },
-            text: {
-                text: '001',
-                x: 170,
-                y: 140
-            }
-        },
-        {
-            data: dataSsm2,
-            render: true,
-            legend: {
-                text: 'ssm 0.002:'
-            },
-            text: {
-                text: '0002',
-                x: 270,
-                y: 140
-            }
-        }];
+        
 
-        new SSMContainer(ssmData);
+        this.container = new SSMContainer();
 
         new FocusModule(width, height, this.domainX, this.domainY);
         // disable loading
         
+    }
+
+    public addLineToContainer(lineConfig) {
+        this.container.addLine(lineConfig)
     }
 
     private renderObserved(data) {
