@@ -17,12 +17,14 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // this.http.get<String>("api/home").subscribe(result => console.log(result));
     // this.http.post("api/create", {"qq":"123"}).subscribe(result => console.log(result));
-    this.websoketService.initializeWebSocketConnection();
+    // this.websoketService.initializeWebSocketConnection();
   }
 
   sendMessage(message): void {
     // this.websoketService.sendMessage("qqq");
     // this.websoketService.sendMessage("www");
     this.websoketService.getData("0.001", "1044");
+    this.websoketService.getData("0.001", "4327");
+    this.websoketService.getData("0.001", "2841");
   }
 }
