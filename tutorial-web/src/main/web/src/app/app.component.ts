@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {WebsoketService} from "./websoket.service";
+import {WebsoketService} from "./service/websoket.service";
 
 @Component({
   selector: 'app-root',
@@ -23,8 +23,9 @@ export class AppComponent implements OnInit{
   sendMessage(message): void {
     // this.websoketService.sendMessage("qqq");
     // this.websoketService.sendMessage("www");
-    this.websoketService.getData("0.001", "1044");
-    this.websoketService.getData("0.001", "4327");
-    this.websoketService.getData("0.001", "2841");
+    // this.websoketService.getData("0.001", "1044");
+    // this.websoketService.getData("0.001", "4327");
+    this.websoketService.getWholeLineData("0.001");
+    // this.websoketService.getConnection().then(client => console.log("qwe"));
   }
 }

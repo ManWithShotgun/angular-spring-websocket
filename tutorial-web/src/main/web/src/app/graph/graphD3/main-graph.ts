@@ -3,6 +3,7 @@ import {GraphArea} from './graph-area';
 import {GraphText} from './graph-text';
 import {SSMContainer} from './impl/ssm-container';
 import {FocusModule} from './impl/focus-module';
+import {WebsoketService} from "../../service/websoket.service";
 
 export class MainGraph {
 
@@ -31,8 +32,25 @@ export class MainGraph {
             .attr("xlink:href", conf.href);
     }
 
-    constructor(private selector: string) {
+    constructor(private selector: string, private webSocketService: WebsoketService) {
+        this.webSocketService.getConnection().then(client => {
+            client.subscribe("/user/data/reply", this.receiveData);
+            client.subscribe("/user/data-all/reply", this.receiveWholeLine);
+            return client;
+        });
         // create promise chain and end set .then(init)
+    }
+
+    private receiveData(response) {
+        if (response.body) {
+            console.log(response.body);
+          }
+    }
+
+    private receiveWholeLine(response) {
+        if (response.body) {
+            console.log(response.body);
+          }
     }
 
     public init(dataRef) {

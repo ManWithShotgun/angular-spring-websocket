@@ -1,6 +1,5 @@
 package ru.ilia.app.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -14,9 +13,9 @@ import org.springframework.stereotype.Controller;
 import ru.ilia.app.service.DataService;
 
 import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class WebSocketController {
@@ -25,14 +24,14 @@ public class WebSocketController {
     private final DataService dataService;
 
     @Autowired
-    WebSocketController(SimpMessagingTemplate template, SimpMessageSendingOperations messagingTemplate, DataService dataService){
+    WebSocketController(SimpMessagingTemplate template, SimpMessageSendingOperations messagingTemplate, DataService dataService) {
         this.messagingTemplate = messagingTemplate;
         this.dataService = dataService;
     }
 
     @MessageMapping("/send/message")
     @SendToUser("/chat/reply")
-    public String onReceivedMesage(@Payload String message){
+    public String onReceivedMesage(@Payload String message) {
 //        this.template.convertAndSend("/chat",  new SimpleDateFormat("HH:mm:ss").format(new Date())+"- "+message);
         return "rrr: " + message;
     }
@@ -50,6 +49,22 @@ public class WebSocketController {
         objectNode.put("ksi", ksi);
         objectNode.put("mass", mass);
         objectNode.put("result", result);
+        return objectNode.toString();
+    }
+
+    @MessageMapping("/get-data-all")
+    @SendToUser("/data-all/reply")
+    public String onGetAllResults(String jsonRequest) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(jsonRequest);
+        String ksi = jsonNode.get("ksi").asText();
+        HashMap<String, String> result = dataService.getAllResults(ksi);
+        ArrayList<Map.Entry<String, String>> entries = new ArrayList<>(result.entrySet());
+        // create response
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("ksi", ksi);
+//        objectNode.putArray("result").addAll();
+        objectNode.put("result", );
         return objectNode.toString();
     }
 }
