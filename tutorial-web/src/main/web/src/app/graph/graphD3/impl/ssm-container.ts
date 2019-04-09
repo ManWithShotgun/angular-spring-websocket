@@ -34,6 +34,10 @@ export class SSMContainer {
         this.lines.push(line);
     }
 
+    public setData(data) {
+        this.lines[0].setData(data);
+    }
+
     public static updateX(x0) {
         SSMContainer.context.updateX(x0);
     }

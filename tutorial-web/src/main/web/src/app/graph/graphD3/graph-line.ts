@@ -32,7 +32,7 @@ export class GraphLine {
         }
     }
 
-    protected setData(data) {
+    public setData(data) {
         this.data = data;
         this.lienView.datum(this.data);
         this.lienView.attr("d", this.line);

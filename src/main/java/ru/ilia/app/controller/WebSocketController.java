@@ -2,6 +2,7 @@ package ru.ilia.app.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -55,16 +56,21 @@ public class WebSocketController {
     @MessageMapping("/get-data-all")
     @SendToUser("/data-all/reply")
     public String onGetAllResults(String jsonRequest) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(jsonRequest);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(jsonRequest);
         String ksi = jsonNode.get("ksi").asText();
         HashMap<String, String> result = dataService.getAllResults(ksi);
-        ArrayList<Map.Entry<String, String>> entries = new ArrayList<>(result.entrySet());
         // create response
-        ObjectNode objectNode = objectMapper.createObjectNode();
+        ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("ksi", ksi);
-//        objectNode.putArray("result").addAll();
-        objectNode.put("result", );
+        ArrayList<JsonNode> jsonNodes = new ArrayList<>(result.size());
+        for (Map.Entry<String, String> entry : result.entrySet()) {
+            ArrayNode point = mapper.createArrayNode();
+            point.add(entry.getKey());
+            point.add(entry.getValue());
+            jsonNodes.add(point);
+        }
+        objectNode.putArray("result").addAll(jsonNodes);
         return objectNode.toString();
     }
 }

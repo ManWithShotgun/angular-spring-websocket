@@ -34,8 +34,8 @@ export class MainGraph {
 
     constructor(private selector: string, private webSocketService: WebsoketService) {
         this.webSocketService.getConnection().then(client => {
-            client.subscribe("/user/data/reply", this.receiveData);
-            client.subscribe("/user/data-all/reply", this.receiveWholeLine);
+            client.subscribe("/user/data/reply", this.receiveData.bind(this));
+            client.subscribe("/user/data-all/reply", this.receiveWholeLine.bind(this));
             return client;
         });
         // create promise chain and end set .then(init)
@@ -50,6 +50,58 @@ export class MainGraph {
     private receiveWholeLine(response) {
         if (response.body) {
             console.log(response.body);
+            var dataSsm001 = [
+                [8.59165449529164, 1.06178857435021],
+                [99.3760798873023, 1.15128488626385],
+                [222.230493024433, 1.19144730357768],
+                [315.186338782478, 1.21323273909261],
+                [413.033691288169, 1.21308845227264],
+                [566.327398615062, 1.20063904156244],
+                [662.543579300040, 1.19080980458061],
+                [757.127440327453, 1.14339458712534],
+                [795.178423299542, 1.12496111020824],
+                [886.500992869312, 1.08675691414999],
+                [1044.13964529584, 0.991876112300337],
+                [1174.05555075058, 0.918239146783523],
+                [1471.38986992273, 0.698270266164395],
+                [2138.88550436439, 0.294353459014719],
+                [2841.70227878329, 0.0949642731795702],
+                [3536.36453324161, 0.0302675143064834],
+                [4327.23866399672, 0.00873436711509305],
+                [4986.57853498789, 0.00354294832982600]
+              ];
+
+              var test = [
+                  [99, 1.15128488626385],
+                  [1044, 0.991876112300337],
+                  [1174, 0.918239146783523],
+                  [1471, 0.698270266164395],
+                  [222, 1.19144730357768],
+                  [662, 1.19080980458061],
+                  [3536, 0.0302675143064834],
+                  [795, 1.12496111020824],
+                  [2138, 0.294353459014719],
+                  [2841, 0.0949642731795702],
+                  [566, 1.20063904156244],
+                  [413, 1.21308845227264],
+                  [886, 1.08675691414999],
+                  [315, 1.21323273909261],
+                  [92, 1.06178857435021],
+                  [757, 1.14339458712534],
+                  [4986, 0.00354294832982600],
+                  [4327, 0.00873436711509305]
+                ];
+            test.sort((a, b) => {
+                if (a[0] === b[0]) {
+                    return 0;
+                }
+                else {
+                    return (a[0] < b[0]) ? -1 : 1;
+                }
+            });
+            // before render the data should be sort
+            // this.container.setData(JSON.parse(response.body).result);
+            this.container.setData(test);
           }
     }
 
