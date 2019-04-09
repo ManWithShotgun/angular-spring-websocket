@@ -24,15 +24,17 @@ export class WebsoketService {
     return this.stompClientPromise;
   }
 
-  sendMessage(message): void {
-    this.stompClient.send("/app/send/message", {}, message);
-  }
-
   getData(ksi, mass): void {
-    this.stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass }));
+    this.getConnection().then(stompClient => {
+      stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass }));
+      return stompClient;
+    });
   }
 
   getWholeLineData(ksi): void {
-    this.stompClient.send("/app/get-data-all", {}, JSON.stringify({ ksi }));
+    this.getConnection().then(stompClient => {
+      stompClient.send("/app/get-data-all", {}, JSON.stringify({ ksi }));
+      return stompClient;
+    });
   }
 }

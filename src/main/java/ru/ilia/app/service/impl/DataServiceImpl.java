@@ -1,14 +1,18 @@
 package ru.ilia.app.service.impl;
 
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.ilia.app.service.DataService;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class DataServiceImpl implements DataService {
 
     private HashMap<String, HashMap<String, String>> database = new HashMap<>();
+    private Map<String, String> customValues = new HashMap<>();
 
 
     public DataServiceImpl() {
@@ -56,15 +60,35 @@ public class DataServiceImpl implements DataService {
         dataSmm0002.put("4989", "0.00189836394573680");
         database.put("0.001", dataSmm001);
         database.put("0.0002", dataSmm0002);
+        // custom values
+        customValues.put("4800", "0.00289836394573680");
+        customValues.put("4900", "0.00220836394573680");
+        customValues.put("5000", "0.00200836394573680");
     }
 
+    // FIX: the method should not returns null
     @Override
     public String getResult(String ksi, String mass) {
-        return database.get(ksi).get(mass);
+        String result = database.get(ksi).get(mass);
+        if (StringUtils.isBlank(result)) {
+            return calculateEmulation(mass);
+        }
+        return result;
+    }
+
+    private String calculateEmulation(String mass) {
+        System.out.println("Calculation emulation by thread sleep. Mass: " + mass);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return customValues.get(mass);
     }
 
     @Override
-    public HashMap<String, String> getAllResults(String ksi) {
-        return database.get(ksi);
+    public Map<String, String> getAllResults(String ksi) {
+        HashMap<String, String> stringStringHashMap = database.get(ksi);
+        return MapUtils.emptyIfNull(stringStringHashMap);
     }
 }

@@ -129,6 +129,7 @@ export class Graph {
         main.init(dataRef);
         main.addLineToContainer(ssmData[0]);
         main.addLineToContainer(ssmData[1]);
+        main.requestWholeLine("0.0002");
     }
 }
 

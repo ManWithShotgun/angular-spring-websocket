@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -56,11 +57,12 @@ public class WebSocketController {
     @MessageMapping("/get-data-all")
     @SendToUser("/data-all/reply")
     public String onGetAllResults(String jsonRequest) throws IOException {
+        // -> deserialize Response
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(jsonRequest);
         String ksi = jsonNode.get("ksi").asText();
-        HashMap<String, String> result = dataService.getAllResults(ksi);
-        // create response
+        Map<String, String> result = dataService.getAllResults(ksi);
+        // create response -> serialize Response class
         ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("ksi", ksi);
         ArrayList<JsonNode> jsonNodes = new ArrayList<>(result.size());
