@@ -97,11 +97,8 @@ export class Graph {
             [4468.42508385474, 0.000374905054734916],
             [4995.17238950382, 0.000394129240239056]
           ];
-          var dataSsm001 = [];
-          var dataSsm0002 = [];
 
         let ssmData = [{
-          data: dataSsm001,
           render: true,
           legend: {
               text: 'ssm 0.01:'
@@ -113,7 +110,6 @@ export class Graph {
           }
       },
       {
-          data: dataSsm0002,
           render: true,
           legend: {
               text: 'ssm 0.002:'

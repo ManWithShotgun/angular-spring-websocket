@@ -3,10 +3,10 @@ import {MainGraph} from './main-graph';
 
 export class GraphLine {
     
-    protected line;
-    protected lienView;
+    private line;
+    private lienView;
 
-    protected data: any[];
+    protected data: any[] = [];
 
     constructor(lineConfig: any) {
         this.line = d3.svg.line()
@@ -23,13 +23,14 @@ export class GraphLine {
         this.lienView = MainGraph.svg.append("path").style("stroke-dasharray", ("7, 4, 4, 4"));
         if (lineConfig.data) {
             this.data = lineConfig.data;
+            // add data
             this.lienView.datum(this.data);
+            // start render
+            this.lienView.attr("d", this.line);
+
         }
         // css class necessary
         this.lienView.attr("class", lineConfig.class);
-        if (lineConfig.render) {
-            this.lienView.attr("d", this.line);
-        }
     }
 
     public setData(data) {

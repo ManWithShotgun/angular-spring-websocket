@@ -68,22 +68,6 @@ export class MainGraph {
           }
     }
 
-    // to array entity
-    private toFloat(point) {
-        return [parseFloat(point[0]), parseFloat(point[1])];
-    }
-
-    // to array entity
-    private sortMatrix(a, b): number {
-        if (a[0] === b[0]) {
-            return 0;
-        }
-        else {
-            return (a[0] < b[0]) ? -1 : 1;
-        }
-    }
-
-    // to array entity
     private requestMissingPointsOfLine(ksi, data): void {
         // send requests based on config:
         // 1. step between points
@@ -99,7 +83,6 @@ export class MainGraph {
             }
         }
     }
-    // ---
 
     public init(dataRef) {
         let margin = {top: 20, right: 30, bottom: 60, left: 60},
