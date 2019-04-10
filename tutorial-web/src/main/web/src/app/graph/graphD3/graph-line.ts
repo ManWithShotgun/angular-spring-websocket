@@ -37,4 +37,24 @@ export class GraphLine {
         this.lienView.datum(this.data);
         this.lienView.attr("d", this.line);
     }
+
+    public setPoint(point) {
+        let insertIndex = -1;
+        for(let i = 0; i < this.data.length; i++) {
+            // if the mass of point alredy exists then update value
+            if (this.data[i][0] === point[0]) {
+                this.data[i][1] = point[1];
+                break;
+            }
+            // if mass of point less current mass then insert point
+            if (point[0] < this.data[i][0]) {
+                insertIndex = i
+                break;
+            }
+        }
+        if (insertIndex > -1) {
+            this.data.splice(insertIndex, 0, point);
+        }
+        this.setData(this.data);
+    }
 }

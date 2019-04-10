@@ -50,7 +50,9 @@ export class MainGraph {
 
     private receiveData(response) {
         if (response.body) {
+            let res = JSON.parse(response.body);
             console.log(response.body);
+            this.container.setPoint(this.toFloat([res.mass, res.result]));
           }
     }
 
@@ -66,10 +68,12 @@ export class MainGraph {
           }
     }
 
+    // to array entity
     private toFloat(point) {
         return [parseFloat(point[0]), parseFloat(point[1])];
     }
 
+    // to array entity
     private sortMatrix(a, b): number {
         if (a[0] === b[0]) {
             return 0;
@@ -79,6 +83,7 @@ export class MainGraph {
         }
     }
 
+    // to array entity
     private requestMissingPointsOfLine(ksi, data): void {
         // send requests based on config:
         // 1. step between points

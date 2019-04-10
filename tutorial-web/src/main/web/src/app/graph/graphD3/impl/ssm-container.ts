@@ -38,6 +38,10 @@ export class SSMContainer {
         this.lines[0].setData(data);
     }
 
+    public setPoint(point) {
+        this.lines[0].setPoint(point);
+    }
+
     public static updateX(x0) {
         SSMContainer.context.updateX(x0);
     }
