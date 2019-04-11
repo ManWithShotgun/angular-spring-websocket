@@ -3,6 +3,7 @@ import {MainGraph} from '../main-graph';
 import {GraphLine} from '../graph-line';
 import {GraphText} from '../graph-text';
 import {SSMText} from './ssm-text';
+import { LineConfig } from '../line-config';
 
 export class SSMLine extends GraphLine {
     private bisectDate = d3.bisector(function(d) { return d[0]; }).left;
@@ -12,15 +13,15 @@ export class SSMLine extends GraphLine {
     private legendText: string;
     private focusGroup;
 
-    constructor(lineConfig: any) {
+    constructor(lineConfig: LineConfig) {
         super(lineConfig);
         // set text
-        if(lineConfig.text) {
-            new SSMText(lineConfig.text);
+        if(lineConfig.getTextConfig()) {
+            new SSMText(lineConfig.getTextConfig());
         }
         // set dinamic legend for line
-        this.legendText = lineConfig.legend.text;
-        this.legendView = new GraphText(lineConfig.legend);
+        this.legendText = lineConfig.getLedgedConfig().getText();
+        this.legendView = new GraphText(lineConfig.getLedgedConfig());
         // set focus group
         this.focusGroup = MainGraph.svg.append("g")
             .attr("class", "focus")

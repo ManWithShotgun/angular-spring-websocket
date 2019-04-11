@@ -1,5 +1,6 @@
 import {MainGraph} from '../main-graph';
 import {GraphText} from '../graph-text';
+import { LedgedConfig } from '../legend-config';
 
 
 // example:
@@ -13,10 +14,10 @@ import {GraphText} from '../graph-text';
 export class SSMText extends GraphText {
     private static urlZ: string = 'http://svgshare.com/i/3p9.svg';
     private static urlE: string = 'http://svgshare.com/i/3sF.svg';
-    constructor(textConfig: any) {
+    constructor(textConfig: LedgedConfig) {
         super(textConfig);
         this.renderE();
-        if (textConfig.urlZ) {
+        if (textConfig.canRenderZ()) {
             this.renderZ();
         }
     }

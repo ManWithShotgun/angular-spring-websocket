@@ -4,6 +4,8 @@ import {GraphText} from './graph-text';
 import {SSMContainer} from './impl/ssm-container';
 import {FocusModule} from './impl/focus-module';
 import {WebsoketService} from "../../service/websoket.service";
+import { LedgedConfig } from './legend-config';
+import { LinePoints } from './line-points';
 
 export class MainGraph {
 
@@ -52,7 +54,7 @@ export class MainGraph {
         if (response.body) {
             let res = JSON.parse(response.body);
             console.log(response.body);
-            this.container.setPoint(this.toFloat([res.mass, res.result]));
+            this.container.setPoint(LinePoints.pointToFloat([res.mass, res.result]));
           }
     }
 
@@ -61,14 +63,14 @@ export class MainGraph {
             // before render the data should be converted and sorted
             let res = JSON.parse(response.body);
             // TODO: move the method in constructor for Graph line
-            let data = res.result.map(this.toFloat).sort(this.sortMatrix);
+            let line = new LinePoints(res.result);
             console.log('render line with ksi = ' + res.ksi);
-            this.container.setData(data);
-            this.requestMissingPointsOfLine(res.ksi, data);
+            this.container.setData(line);
+            this.requestMissingPointsOfLine(res.ksi, line);
           }
     }
 
-    private requestMissingPointsOfLine(ksi, data): void {
+    private requestMissingPointsOfLine(ksi, line: LinePoints): void {
         // send requests based on config:
         // 1. step between points
         // 2. start mass (0)
@@ -76,7 +78,7 @@ export class MainGraph {
         let startMass = 0;
         let endMass = 5000;
         let step = 100;
-        let calculatedMass = data.map(point => point[0]);
+        let calculatedMass = line.getData().map(point => point[0]);
         for(startMass = 4800; startMass <= endMass; startMass += step) {
             if (!calculatedMass.includes(startMass)) {
                 this.webSocketService.getData(ksi, startMass);
@@ -199,12 +201,9 @@ export class MainGraph {
     }
 
     private renderRef(data) {
-        new GraphText({
-            text: 'Reference model',
-            class: 'ref-text',
-            x: 70,
-            y: 40
-        });
+        let textConfig = new LedgedConfig('Reference model', 70, 40);
+        textConfig.setCssClass('ref-text');
+        new GraphText(textConfig);
 
         let temp = MainGraph.svg.selectAll(".rectangles");
 

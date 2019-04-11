@@ -1,16 +1,18 @@
 import {MainGraph} from './main-graph';
+import { LedgedConfig } from './legend-config';
 
+// TODO: simplify this - don't save textSign
 export class GraphText {
     protected textSign: {text: string, x, y};
     private textView;
-    constructor(textConfig: any) {
+    constructor(textConfig: LedgedConfig) {
         this.textSign = {
-            text: textConfig.text,
-            x: textConfig.x,
-            y: textConfig.y
+            text: textConfig.getText(),
+            x: textConfig.getX(),
+            y: textConfig.getY()
         };
         this.textView = MainGraph.svg.append("text")
-            .attr("class", textConfig.class)
+            .attr("class", textConfig.getCssClass())
             .attr("x", this.textSign.x)         
             .attr("y", this.textSign.y)         
             .text(this.textSign.text);

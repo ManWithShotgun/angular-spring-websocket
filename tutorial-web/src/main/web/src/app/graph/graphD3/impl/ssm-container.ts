@@ -1,8 +1,10 @@
 import {SSMLine} from './ssm-line';
+import { LineConfig } from '../line-config';
+import { LedgedConfig } from '../legend-config';
+import { LinePoints } from '../line-points';
 
 export class SSMContainer {
     private static context;
-    private static INTORPOLATE = 'monotone';
     private static LINE_CLASS = 'ssm-line';
     private static TEXT_CLASS = 'ssm-text';
     private static LEGEND_CLASS = 'ssm-legend-text';
@@ -17,25 +19,25 @@ export class SSMContainer {
         SSMContainer.context = this;
     }
 
-    public addLine(conf) {
+    // legend text & line text + x +y
+    public addLine(config) {
         let lineNumber = this.lines.length
-        conf.interpolate = SSMContainer.INTORPOLATE;
-        conf.class = SSMContainer.LINE_CLASS;
-        // set text config
-        conf.text.class = SSMContainer.TEXT_CLASS; 
+        let textConfig = new LedgedConfig(config.text.text, config.text.x, config.text.y);
+        textConfig.setCssClass(SSMContainer.TEXT_CLASS);
         if (lineNumber === 0) {
-            conf.text.urlZ = true;
+            textConfig.mustRenderZ();
         }
         // set legend config
-        conf.legend.x = SSMContainer.LEGEND_START_X;
-        conf.legend.y = SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * lineNumber;
-        conf.legend.class = SSMContainer.LEGEND_CLASS;
-        let line = new SSMLine(conf);
+        let legendConfig = new LedgedConfig(config.legend.text, SSMContainer.LEGEND_START_X, 
+            SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * lineNumber);
+        legendConfig.setCssClass(SSMContainer.LEGEND_CLASS);
+        let lineConfig = new LineConfig(textConfig, SSMContainer.LINE_CLASS, legendConfig);
+        let line = new SSMLine(lineConfig);
         this.lines.push(line);
     }
 
-    public setData(data) {
-        this.lines[0].setData(data);
+    public setData(line: LinePoints) {
+        this.lines[0].setData(line.getData());
     }
 
     public setPoint(point) {

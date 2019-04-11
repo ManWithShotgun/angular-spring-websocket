@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import {MainGraph} from './main-graph';
+import { LineConfig } from './line-config';
 
 export class GraphLine {
     
@@ -8,21 +9,17 @@ export class GraphLine {
 
     protected data: any[] = [];
 
-    constructor(lineConfig: any) {
+    constructor(lineConfig: LineConfig) {
         this.line = d3.svg.line()
             .x(function(d) { return MainGraph.x(d[0]); })
             .y(function(d) { return MainGraph.y(d[1]); });
 
-        if (lineConfig.interpolate) {
-            this.line.interpolate(lineConfig.interpolate);
-        } else {
-            this.line.interpolate("monotone");
-        }
+        this.line.interpolate(lineConfig.getInterpilate());
 
         // TODO-ilia remove in css class
         this.lienView = MainGraph.svg.append("path").style("stroke-dasharray", ("7, 4, 4, 4"));
-        if (lineConfig.data) {
-            this.data = lineConfig.data;
+        if (lineConfig.getData()) {
+            this.data = lineConfig.getData();
             // add data
             this.lienView.datum(this.data);
             // start render
@@ -30,7 +27,7 @@ export class GraphLine {
 
         }
         // css class necessary
-        this.lienView.attr("class", lineConfig.class);
+        this.lienView.attr("class", lineConfig.getCssClass());
     }
 
     public setData(data) {
