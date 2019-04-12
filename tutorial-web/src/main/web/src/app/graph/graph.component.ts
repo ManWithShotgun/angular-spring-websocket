@@ -99,23 +99,15 @@ export class Graph {
           ];
 
         let ssmData = [{
-          render: true,
-          legend: {
-              text: 'ssm 0.01:'
-          },
+            ksi: '0.01',
           text: {
-              text: '0.01',
               x: 170,
               y: 140
           }
       },
       {
-          render: true,
-          legend: {
-              text: 'ssm 0.002:'
-          },
+          ksi: '0.0002',
           text: {
-              text: '0.002',
               x: 270,
               y: 140
           }

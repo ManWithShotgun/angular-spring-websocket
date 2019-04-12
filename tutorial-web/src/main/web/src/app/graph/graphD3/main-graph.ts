@@ -54,7 +54,7 @@ export class MainGraph {
         if (response.body) {
             let res = JSON.parse(response.body);
             console.log(response.body);
-            this.container.setPoint(LinePoints.pointToFloat([res.mass, res.result]));
+            this.container.setPoint(LinePoints.pointToFloat([res.mass, res.result]), res.ksi);
           }
     }
 
@@ -65,7 +65,7 @@ export class MainGraph {
             // TODO: move the method in constructor for Graph line
             let line = new LinePoints(res.result);
             console.log('render line with ksi = ' + res.ksi);
-            this.container.setData(line);
+            this.container.setData(line, res.ksi);
             this.requestMissingPointsOfLine(res.ksi, line);
           }
     }

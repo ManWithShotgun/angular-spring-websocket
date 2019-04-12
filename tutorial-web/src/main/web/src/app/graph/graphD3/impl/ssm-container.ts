@@ -8,12 +8,14 @@ export class SSMContainer {
     private static LINE_CLASS = 'ssm-line';
     private static TEXT_CLASS = 'ssm-text';
     private static LEGEND_CLASS = 'ssm-legend-text';
+    private static LEGEND_TEXT_PREFIX = 'ssm ';
 
     private static LEGEND_START_X = 470;
     private static LEGEND_START_Y = 150;
     private static LEGEND_STEP_Y = 20;
 
-    private lines: SSMLine[] = [];
+    // private lines: SSMLine[] = [];
+    private lines: Map<string, SSMLine> = new Map();
 
     constructor() {
         SSMContainer.context = this;
@@ -21,27 +23,27 @@ export class SSMContainer {
 
     // legend text & line text + x +y
     public addLine(config) {
-        let lineNumber = this.lines.length
-        let textConfig = new LedgedConfig(config.text.text, config.text.x, config.text.y);
+        let lineNumber: number = this.lines.size;
+        let textConfig = new LedgedConfig(config.ksi, config.text.x, config.text.y);
         textConfig.setCssClass(SSMContainer.TEXT_CLASS);
         if (lineNumber === 0) {
             textConfig.mustRenderZ();
         }
         // set legend config
-        let legendConfig = new LedgedConfig(config.legend.text, SSMContainer.LEGEND_START_X, 
+        let legendConfig = new LedgedConfig(SSMContainer.LEGEND_TEXT_PREFIX + config.ksi, SSMContainer.LEGEND_START_X, 
             SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * lineNumber);
         legendConfig.setCssClass(SSMContainer.LEGEND_CLASS);
         let lineConfig = new LineConfig(textConfig, SSMContainer.LINE_CLASS, legendConfig);
         let line = new SSMLine(lineConfig);
-        this.lines.push(line);
+        this.lines.set(config.ksi, line);
     }
 
-    public setData(line: LinePoints) {
-        this.lines[0].setData(line.getData());
+    public setData(line: LinePoints, ksi) {
+        this.lines.get(ksi).setData(line.getData());
     }
 
-    public setPoint(point) {
-        this.lines[0].setPoint(point);
+    public setPoint(point, ksi) {
+        this.lines.get(ksi).setPoint(point);
     }
 
     public static updateX(x0) {
