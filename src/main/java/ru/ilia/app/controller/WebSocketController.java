@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -45,7 +46,7 @@ public class WebSocketController {
         JsonNode jsonNode = objectMapper.readTree(jsonRequest);
         String ksi = jsonNode.get("ksi").asText();
         String mass = jsonNode.get("mass").asText();
-        String result = dataService.getResult(ksi, mass);
+        String result = StringUtils.defaultIfBlank(dataService.getResult(ksi, mass), "0");
         // create response
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("ksi", ksi);
