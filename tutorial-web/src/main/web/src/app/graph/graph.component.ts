@@ -99,25 +99,24 @@ export class Graph {
           ];
 
         let ssmData = [{
-            ksi: '0.01',
-          text: {
-              x: 170,
-              y: 140
-          }
-      },
-      {
-          ksi: '0.0002',
-          text: {
-              x: 270,
-              y: 140
-          }
-      }];
+            ksi: '0.001',
+            text: {
+                x: 170,
+                y: 140
+            }
+        },
+        {
+            ksi: '0.0002',
+            text: {
+                x: 270,
+                y: 140
+            }
+        }];
 
         let main: MainGraph = new MainGraph("div#svg", this.websoketService);
         main.init(dataRef);
-        main.addLineToContainer(ssmData[0]);
-        main.addLineToContainer(ssmData[1]);
-        main.requestWholeLine("0.0002");
+        main.requestWholeLine(ssmData[0]);
+        main.requestWholeLine(ssmData[1]);
     }
 }
 

@@ -46,8 +46,9 @@ export class MainGraph {
     }
 
     // Request to backend
-    public requestWholeLine(ksi) {
-        this.webSocketService.getWholeLineData(ksi);
+    public requestWholeLine(lineConfig) {
+        this.container.addLine(lineConfig)
+        this.webSocketService.getWholeLineData(lineConfig.ksi);
     }
 
     private receiveData(response) {
@@ -184,10 +185,6 @@ export class MainGraph {
         new FocusModule(width, height, this.domainX, this.domainY);
         // disable loading
         
-    }
-
-    public addLineToContainer(lineConfig) {
-        this.container.addLine(lineConfig)
     }
 
     private renderObserved(data) {
