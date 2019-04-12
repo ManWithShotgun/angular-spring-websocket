@@ -54,6 +54,10 @@ export class MainGraph {
         if (response.body) {
             let res = JSON.parse(response.body);
             console.log(response.body);
+            if (!res.result) {
+                console.log('Result is null for ksi: ' + res.ksi + " mass: " + res.mass);
+                return;
+            }
             let line = LinePoints.pointToFloat([res.mass, res.result]);
             if (line[1] < this.domainY[0]) {
                 line[1] = this.domainY[0];
@@ -83,7 +87,7 @@ export class MainGraph {
         let endMass = 5000;
         let step = 100;
         let calculatedMass = line.getData().map(point => point[0]);
-        for(startMass = 4500; startMass <= endMass; startMass += step) {
+        for(startMass = 0; startMass <= endMass; startMass += step) {
             if (!calculatedMass.includes(startMass)) {
                 this.webSocketService.getData(ksi, startMass);
             }

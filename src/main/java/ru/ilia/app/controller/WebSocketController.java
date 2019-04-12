@@ -46,7 +46,7 @@ public class WebSocketController {
         JsonNode jsonNode = objectMapper.readTree(jsonRequest);
         String ksi = jsonNode.get("ksi").asText();
         String mass = jsonNode.get("mass").asText();
-        String result = StringUtils.defaultIfBlank(dataService.getResult(ksi, mass), "0");
+        String result = dataService.getResult(ksi, mass);
         // create response
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("ksi", ksi);
