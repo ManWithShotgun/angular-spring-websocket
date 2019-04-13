@@ -14,28 +14,35 @@ export class SSMContainer {
     private static LEGEND_START_Y = 150;
     private static LEGEND_STEP_Y = 20;
 
-    // private lines: SSMLine[] = [];
+    private lendgesForLines: Map<string, any> = new Map();
     private lines: Map<string, SSMLine> = new Map();
 
     constructor() {
+        this.lendgesForLines.set('0.001', {x: 170, y: 140});
+        this.lendgesForLines.set('0.0002', {x: 270, y: 140});
         SSMContainer.context = this;
     }
 
-    // legend text & line text + x +y
-    public addLine(config) {
+    public addLine(ksi) {
         let lineNumber: number = this.lines.size;
-        let textConfig = new LedgedConfig(config.ksi, config.text.x, config.text.y);
-        textConfig.setCssClass(SSMContainer.TEXT_CLASS);
-        if (lineNumber === 0) {
-            textConfig.mustRenderZ();
-        }
+
         // set legend config
-        let legendConfig = new LedgedConfig(SSMContainer.LEGEND_TEXT_PREFIX + config.ksi, SSMContainer.LEGEND_START_X, 
+        let legendConfig = new LedgedConfig(SSMContainer.LEGEND_TEXT_PREFIX + ksi, SSMContainer.LEGEND_START_X, 
             SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * lineNumber);
         legendConfig.setCssClass(SSMContainer.LEGEND_CLASS);
-        let lineConfig = new LineConfig(textConfig, SSMContainer.LINE_CLASS, legendConfig);
+        let lineConfig = new LineConfig(SSMContainer.LINE_CLASS, legendConfig);
+        // set text for line if exists
+        let textPosition = this.lendgesForLines.get(ksi);
+        if (textPosition) {
+            let textConfig = new LedgedConfig(ksi, textPosition.x, textPosition.y);
+            textConfig.setCssClass(SSMContainer.TEXT_CLASS);
+            if (lineNumber === 0) {
+                textConfig.mustRenderZ();
+            }
+            lineConfig.setTextConfig(textConfig);
+        }
         let line = new SSMLine(lineConfig);
-        this.lines.set(config.ksi, line);
+        this.lines.set(ksi, line);
     }
 
     public setData(line: LinePoints, ksi) {

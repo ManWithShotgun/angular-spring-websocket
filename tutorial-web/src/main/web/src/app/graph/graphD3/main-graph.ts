@@ -17,14 +17,6 @@ export class MainGraph {
     private domainY = [Math.pow(10, -4), Math.pow(10, 1)];
     private container: SSMContainer;
 
-    // example:
-    // {
-    //     x: 110,
-    //     y: 80,
-    //     width: 45,
-    //     height: 45,
-    //     href: 'http://svgshare.com/i/3p9.svg'
-    // }
     public static renderSvg(conf): any {
         return MainGraph.svg.append("svg:image")
             .attr('x', conf.x)
@@ -46,9 +38,9 @@ export class MainGraph {
     }
 
     // Request to backend
-    public requestWholeLine(lineConfig) {
-        this.container.addLine(lineConfig)
-        this.webSocketService.getWholeLineData(lineConfig.ksi);
+    public requestWholeLine(ksi) {
+        this.container.addLine(ksi)
+        this.webSocketService.getWholeLineData(ksi);
     }
 
     private receiveData(response) {
@@ -71,7 +63,6 @@ export class MainGraph {
         if (response.body) {
             // before render the data should be converted and sorted
             let res = JSON.parse(response.body);
-            // TODO: move the method in constructor for Graph line
             let line = new LinePoints(res.result);
             console.log('render line with ksi = ' + res.ksi);
             this.container.setData(line, res.ksi);

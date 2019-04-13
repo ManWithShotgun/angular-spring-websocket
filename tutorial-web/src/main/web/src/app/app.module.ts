@@ -5,6 +5,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { AppComponent } from './app.component';
 import { Graph } from './graph/graph.component';
 import { Control } from './controller/control.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { Control } from './controller/control.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

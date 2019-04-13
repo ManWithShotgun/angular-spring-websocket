@@ -8,10 +8,13 @@ export class LineConfig {
     private data;
     private legendConfig: LedgedConfig;
 
-    constructor(textConfig: LedgedConfig, cssClass, legendConfig: LedgedConfig) {
-        this.textConfig = textConfig;
+    constructor(cssClass, legendConfig: LedgedConfig) {
         this.cssClass = cssClass;
         this.legendConfig = legendConfig;
+    }
+
+    public setTextConfig(textConfig: LedgedConfig) {
+        this.textConfig = textConfig;
     }
 
     public getTextConfig() {
