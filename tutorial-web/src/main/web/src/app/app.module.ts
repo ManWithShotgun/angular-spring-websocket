@@ -13,6 +13,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WsControlComponent } from './ws-control/ws-control.component';
 
 const appRoutes: Routes = [
   { path: 'graph-1', component: FormComponent },
@@ -22,7 +23,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, Graph, Control, NavigationComponent, DashboardComponent, FormComponent
+    AppComponent, Graph, Control, NavigationComponent, DashboardComponent, FormComponent, WsControlComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
