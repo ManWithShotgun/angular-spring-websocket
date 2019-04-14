@@ -101,7 +101,7 @@ export class Graph {
         let main: MainGraph = new MainGraph("div#svg", this.websoketService);
         main.init(dataRef);
         main.requestWholeLine('0.001');
-        main.requestWholeLine('0.0002');
+        // main.requestWholeLine('0.0002');
     }
 }
 
