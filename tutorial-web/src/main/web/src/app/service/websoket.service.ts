@@ -20,6 +20,7 @@ export class WebsoketService {
     });
   }
 
+  // This is not save when commection was lost; Should chech CONNECTED status for client and if need reconnect
   public getConnection(): Promise<any> {
     return this.stompClientPromise;
   }
