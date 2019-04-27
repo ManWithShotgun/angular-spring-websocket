@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 
@@ -6,8 +7,7 @@ import * as SockJS from 'sockjs-client';
   providedIn: 'root'
 })
 export class WebsoketService {
-  private serverUrl = 'http://localhost:8090/socket'
-  private title = 'WebSockets chat';
+  private serverUrl = environment.wsScoketUrl
   private stompClientPromise;
   private stompClient;
 
