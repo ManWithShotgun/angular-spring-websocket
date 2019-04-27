@@ -2,7 +2,13 @@ export class LinePoints {
 
     private data = [];
 
-    constructor(responseData) {
+    constructor(objectOfPoints) {
+        let keys = Object.keys(objectOfPoints);
+        let values = Object.values(objectOfPoints);
+        let responseData = [];
+        for(let i = 0; i < keys.length; i++) {
+            responseData.push([keys[i], values[i]]);
+        }
         this.data = responseData.map(this.toFloat).sort(this.sortMatrix);
     }
 

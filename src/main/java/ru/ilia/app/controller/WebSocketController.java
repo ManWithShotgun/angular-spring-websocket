@@ -1,11 +1,5 @@
 package ru.ilia.app.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -13,11 +7,15 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.ilia.app.controller.entities.WsPointsRequest;
+import ru.ilia.app.controller.entities.WsOnePointRequest;
+import ru.ilia.app.controller.entities.WsPointsResponse;
+import ru.ilia.app.controller.entities.WsOnePointResponse;
 import ru.ilia.app.service.DataService;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -41,39 +39,23 @@ public class WebSocketController {
 
     @MessageMapping("/get-data")
     @SendToUser("/data/reply")
-    public String onGetResult(String jsonRequest) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(jsonRequest);
-        String ksi = jsonNode.get("ksi").asText();
-        String mass = jsonNode.get("mass").asText();
+    @ResponseBody
+    public WsOnePointResponse onGetResult(@Valid @RequestBody WsOnePointRequest request) {
+        String ksi = request.getKsi();
+        String mass = request.getMass();
         String result = dataService.getResult(ksi, mass);
         // create response
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        objectNode.put("ksi", ksi);
-        objectNode.put("mass", mass);
-        objectNode.put("result", result);
-        return objectNode.toString();
+        return new WsOnePointResponse(ksi, mass, result);
     }
 
     @MessageMapping("/get-data-all")
     @SendToUser("/data-all/reply")
-    public String onGetAllResults(String jsonRequest) throws IOException {
+    @ResponseBody
+    public WsPointsResponse onGetAllResults(@Valid @RequestBody WsPointsRequest request) {
         // -> deserialize Response
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(jsonRequest);
-        String ksi = jsonNode.get("ksi").asText();
+        String ksi = request.getKsi();
         Map<String, String> result = dataService.getAllResults(ksi);
         // create response -> serialize Response class
-        ObjectNode objectNode = mapper.createObjectNode();
-        objectNode.put("ksi", ksi);
-        ArrayList<JsonNode> jsonNodes = new ArrayList<>(result.size());
-        for (Map.Entry<String, String> entry : result.entrySet()) {
-            ArrayNode point = mapper.createArrayNode();
-            point.add(entry.getKey());
-            point.add(entry.getValue());
-            jsonNodes.add(point);
-        }
-        objectNode.putArray("result").addAll(jsonNodes);
-        return objectNode.toString();
+        return new WsPointsResponse(ksi, result);
     }
 }
