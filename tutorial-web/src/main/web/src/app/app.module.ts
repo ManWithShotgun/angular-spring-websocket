@@ -16,9 +16,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WsControlComponent } from './ws-control/ws-control.component';
 
 const appRoutes: Routes = [
-  { path: 'graph-1', component: FormComponent },
+  { path: 'welcome', component: FormComponent },
   { path: 'graph-2', component: Graph },
-  { path: 'console', component: DashboardComponent }
+  { path: 'statistic', component: DashboardComponent }
 ];
 
 @NgModule({
