@@ -14,6 +14,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WsControlComponent } from './ws-control/ws-control.component';
+import { WsZprimeLineComponent } from './ws-zprime-line/ws-zprime-line.component';
+import { WsZprimePointComponent } from './ws-zprime-point/ws-zprime-point.component';
+import { WsZprimeStatComponent } from './ws-zprime-stat/ws-zprime-stat.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: FormComponent },
@@ -23,7 +26,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, Graph, Control, NavigationComponent, DashboardComponent, FormComponent, WsControlComponent
+    AppComponent, Graph, Control, NavigationComponent, DashboardComponent, FormComponent, WsControlComponent, WsZprimeLineComponent, WsZprimePointComponent, WsZprimeStatComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
