@@ -18,8 +18,9 @@ export class NavigationComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, public translate: TranslateService) {
     translate.addLangs(['ru', 'en']);
+    translate.setDefaultLang('en');
 
-		let browserLang = translate.getBrowserLang();
+		const browserLang = translate.getBrowserLang();
 		translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
 
