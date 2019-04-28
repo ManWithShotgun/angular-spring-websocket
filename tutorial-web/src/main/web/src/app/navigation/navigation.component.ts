@@ -17,15 +17,10 @@ export class NavigationComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, public translate: TranslateService) {
-    translate.addLangs(['fr', 'en']);
+    translate.addLangs(['ru', 'en']);
 
 		let browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+		translate.use(browserLang.match(/en|ru/) ? browserLang : 'en');
   }
-
-  public switchLanguage(lang: string) {
-		console.log('UPDATE');
-		this.translate.use(lang);
-	}
 
 }
