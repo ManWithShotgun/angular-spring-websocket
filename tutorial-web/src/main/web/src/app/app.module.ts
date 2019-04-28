@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from  '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxLanguageSelectorModule } from 'ngx-language-selector';
 
 import { AppComponent } from './app.component';
 import { Graph } from './graph/graph.component';
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    NgxLanguageSelectorModule,
     HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,

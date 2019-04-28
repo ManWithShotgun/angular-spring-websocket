@@ -21,7 +21,25 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <!-- TODO: get name of site from properties -->
-      <span>np-app</span>
+      <span>{{ 'HOME.TITLE' | translate }}</span>
+      <!-- <mat-select #langSelect class="text_uppercase" [(value)]="translate.currentLang" (selectionChange)="translate.use(langSelect.value)">
+          <mat-option class="text_uppercase" *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">
+              {{ lang }}
+          </mat-option>
+      </mat-select> -->
+      <span class="spacer"></span>
+      <span>
+        <button mat-button [matMenuTriggerFor]="menu">{{translate.currentLang}}</button>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item class="text_uppercase" *ngFor="let lang of translate.getLangs()" [value]="lang" (click)="translate.use(lang)">
+                {{ lang }}
+            </button>
+        </mat-menu>
+      </span>
+      
+      <!-- <select #langSelect2 (change)="translate.use(langSelect2.value)">
+          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+      </select> -->
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
