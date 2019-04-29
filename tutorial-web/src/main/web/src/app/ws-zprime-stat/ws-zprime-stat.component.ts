@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {WebsoketService} from "../service/websoket.service";
 
 @Component({
   selector: 'app-ws-zprime-stat',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WsZprimeStatComponent implements OnInit {
 
-  constructor() { }
+  public color = 'primary';
+  public mode = 'determinate';
+
+  constructor(public websoketService: WebsoketService) { }
 
   ngOnInit() {
   }

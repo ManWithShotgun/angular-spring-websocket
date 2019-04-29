@@ -1,15 +1,27 @@
 <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Requests Info</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
+  <mat-card-content>
+      <h2 class="example-h2">Progress bar configuration</h2>
+      <section class="example-section">
+          <p>
+            <span [matBadge]="websoketService.getRequestsInProgress()" matBadgeOverlap="false">In progress</span>
+          </p>
+          <p>
+              <span [matBadge]="websoketService.getRequestsLimit()" matBadgeOverlap="false" matBadgeColor="warn">In progress request limit</span>
+          </p>
+          <p>
+              <span [matBadge]="websoketService.getQueueLength()" matBadgeOverlap="false" matBadgeColor="warn">Queue</span>
+          </p>
+          <p>
+            <span [matBadge]="websoketService.getRequestsCompleted()" matBadgeOverlap="false" matBadgeColor="accent">Completed</span>
+          </p>
+
+          <mat-progress-bar
+              class="example-margin"
+              [color]="color"
+              [mode]="mode"
+              [value]="(websoketService.getRequestsInProgress() / websoketService.getRequestsLimit()) * 100">
+          </mat-progress-bar>
+        </section>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>LIKE</button>

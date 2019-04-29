@@ -55,6 +55,7 @@ export class MainGraph {
             if (line[1] < this.domainY[0]) {
                 line[1] = this.domainY[0];
             }
+            this.webSocketService.pointReceived();
             this.container.setPoint(line, res.ksi);
           }
     }
