@@ -6,16 +6,16 @@ import {WebsoketService} from "../service/websoket.service";
 @Injectable({
   providedIn: 'root'
 })
-export class MainGraphService {
+    export class MainGraphService {
 
-  constructor(private websoketService: WebsoketService) {
+    private mainGraphSelector: string = 'div#svg';
+    private mainGraphInstance: MainGraph;
 
-  }
+    constructor(private websoketService: WebsoketService) {
 
-  public renderMain() {
-      // fetch('/ws/monitors').then((response) => {return response.json();}).then((data)=> {
-        //     console.log(data);
-        // });
+    }
+
+    public renderMain() {
         var data = [
             [7.04724001002674, 6.61475269982607],
             [469.966494833577, 0.0564702199413471],
@@ -38,9 +38,9 @@ export class MainGraphService {
             [3747.08700528734, 0.000508480886790707],
             [4033.01469573609, 0.000466843569031935],
             [4991.91788941422, 0.000457874894929627]
-          ];
-          // Reference model getted from image
-          var dataRef = [
+        ];
+        // Reference model getted from image
+        var dataRef = [
             [214, 7.74515302348704],
             [422, 2.06670819007132],
             [637, 0.759514797439999],
@@ -62,9 +62,9 @@ export class MainGraphService {
             [4043, 0.000256814729469311],
             [4253, 0.000184543483047888],
             [4468, 0.000133148057754045]
-          ];
-          // Observed model getted from image
-          var dataObserved = [
+        ];
+        // Observed model getted from image
+        var dataObserved = [
             [7.05670966406125, 8.08379869461361],
             [7.04724001002674, 6.61475269982607],
             [99.9161371264827, 1.06814273110627],
@@ -93,13 +93,13 @@ export class MainGraphService {
             [3930.26722770636, 0.000396241941684986],
             [4468.42508385474, 0.000374905054734916],
             [4995.17238950382, 0.000394129240239056]
-          ];
+        ];
 
-        let main: MainGraph = new MainGraph("div#svg", this.websoketService);
-        main.init(dataRef);
-        main.requestWholeLine('0.001');
+        this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
+        this.mainGraphInstance.init(dataRef);
+        this.mainGraphInstance.requestWholeLine('0.001');
         // main.requestWholeLine('0.0002');
-  }
+    }
 
-  
+
 }
