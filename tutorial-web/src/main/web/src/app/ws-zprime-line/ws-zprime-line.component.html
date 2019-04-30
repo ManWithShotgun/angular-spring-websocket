@@ -1,10 +1,10 @@
-<form [formGroup]="requestData" novalidate>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Request line</mat-card-title>
-      <mat-card-subtitle>Send request to calculate and render new line</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Request line</mat-card-title>
+    <mat-card-subtitle>Send request to calculate and render new line</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="requestData" novalidate>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -20,17 +20,17 @@
           </mat-card-actions>
         </div>
       </div>
-      <!-- lines section -->
-      <div class="row row-line" *ngFor="let ksi of mainGraphService.getLinesInfo()">
-        <div class="col mat-stroked-button col-line">
-            <p>Line ksi {{ ksi }} </p>
-        </div>
-        <div class="col">
-          <button mat-icon-button color="warn" (click)="mainGraphService.removeLine(ksi)">
-            <mat-icon>highlight_off</mat-icon>
-          </button>
-        </div>
+    </form>
+    <!-- lines section -->
+    <div class="row row-line" *ngFor="let ksi of mainGraphService.getLinesInfo()">
+      <div class="col mat-stroked-button col-line">
+          <p>Line ksi {{ ksi }} </p>
       </div>
-    </mat-card-content>
-  </mat-card>
-</form>
+      <div class="col">
+        <button mat-icon-button color="warn" (click)="mainGraphService.removeLine(ksi)">
+          <mat-icon>highlight_off</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
