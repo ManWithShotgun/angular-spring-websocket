@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DoubleValidator } from '../ws-control/double.validator';
 
 @Component({
   selector: 'app-ws-zprime-point',
@@ -9,8 +10,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class WsZprimePointComponent implements OnInit {
 
   requestData = this.fb.group({
-    ksi: [null, Validators.required],
-    mass: [null, Validators.required],
+    ksi: [null, [Validators.required, DoubleValidator.isDouble]],
+    mass: [null, [Validators.required, DoubleValidator.isDouble]],
   });
 
   constructor(private fb: FormBuilder) { }

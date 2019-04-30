@@ -12,6 +12,9 @@
             <mat-error *ngIf="requestData.controls['ksi'].hasError('required')">
               Ksi is <strong>required</strong>
             </mat-error>
+            <mat-error *ngIf="requestData.controls['ksi'].hasError('isNotDouble')">
+              Ksi should be <strong>a double</strong>
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
@@ -20,11 +23,14 @@
               <mat-error *ngIf="requestData.controls['mass'].hasError('required')">
                 Mass is <strong>required</strong>
               </mat-error>
+              <mat-error *ngIf="requestData.controls['mass'].hasError('isNotDouble')">
+                Mass should be <strong>a number</strong>
+              </mat-error>
             </mat-form-field>
           </div>
         <div class="col">
           <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">Submit</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!requestData.valid">Submit</button>
           </mat-card-actions>
         </div>
       </div>
