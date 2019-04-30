@@ -12,7 +12,10 @@ import {WebsoketService} from "../service/websoket.service";
     private mainGraphInstance: MainGraph;
 
     constructor(private websoketService: WebsoketService) {
+    }
 
+    ngOnDestroy() {
+        this.mainGraphInstance.onGraphDestroy();
     }
 
     public renderMain() {

@@ -16,5 +16,9 @@ export class Graph {
     ngOnInit() {
         this.mainGraphService.renderMain();
     }
+
+    ngOnDestroy() {
+        this.mainGraphService.ngOnDestroy();
+    }
 }
 

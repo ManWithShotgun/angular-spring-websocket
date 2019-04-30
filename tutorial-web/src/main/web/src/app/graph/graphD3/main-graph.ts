@@ -17,6 +17,8 @@ export class MainGraph {
     private domainX = [1, 5000];
     private domainY = [Math.pow(10, -4), Math.pow(10, 1)];
     private container: SSMContainer;
+    private wsReceivePointSubscription;
+    private wsReceiveLineSubscription;
 
     public static renderSvg(conf): any {
         return MainGraph.svg.append("svg:image")
@@ -29,13 +31,21 @@ export class MainGraph {
 
     constructor(private selector: string, private webSocketService: WebsoketService) {
         this.webSocketService.getConnection().then(client => {
-            // recive one point
-            client.subscribe("/user/data/reply", this.receiveData.bind(this));
-            // recieve list of points
-            client.subscribe("/user/data-all/reply", this.receiveWholeLine.bind(this));
+            // receive one point
+            this.wsReceivePointSubscription = client.subscribe("/user/data/reply", this.receiveData.bind(this));
+            // receive list of points
+            this.wsReceiveLineSubscription = client.subscribe("/user/data-all/reply", this.receiveWholeLine.bind(this));
             return client;
         });
         // create promise chain and end set .then(init)
+    }
+
+    public onGraphDestroy() {
+        this.webSocketService.getConnection().then(client => {
+            this.wsReceiveLineSubscription.unsubscribe();
+            this.wsReceivePointSubscription.unsubscribe();
+            return client;
+        });
     }
 
     // Request to backend
