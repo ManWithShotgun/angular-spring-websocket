@@ -9,6 +9,7 @@ import * as SockJS from 'sockjs-client';
 export class WebsoketService {
   private requestsInProgress = 0;
   private requestsCompleted = 0;
+  private requestsFailed = 0;
   private requestsLimit = 2;
   private serverUrl = environment.wsScoketUrl
   private stompClientPromise;
@@ -34,6 +35,12 @@ export class WebsoketService {
     this.requestFromQueue();
   }
 
+  public pointReceivedWithError() {
+    this.requestsInProgress--;
+    this.requestsFailed++;
+    this.requestFromQueue();
+  }
+
   public requestFromQueue() {
     if (this.getQueueLength() == 0) {
       return;
@@ -48,6 +55,10 @@ export class WebsoketService {
 
   public getRequestsCompleted(): number {
     return this.requestsCompleted;
+  }
+
+  public getRequestsFailed(): number {
+    return this.requestsFailed;
   }
 
   public getRequestsLimit(): number {

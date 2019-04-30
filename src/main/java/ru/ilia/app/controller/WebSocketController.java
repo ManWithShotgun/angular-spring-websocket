@@ -1,14 +1,19 @@
 package ru.ilia.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import ru.ilia.app.controller.entities.WsPointsRequest;
 import ru.ilia.app.controller.entities.WsOnePointRequest;
 import ru.ilia.app.controller.entities.WsPointsResponse;
@@ -40,12 +45,16 @@ public class WebSocketController {
     @MessageMapping("/get-data")
     @SendToUser("/data/reply")
     @ResponseBody
-    public WsOnePointResponse onGetResult(@Valid @RequestBody WsOnePointRequest request) {
-        String ksi = request.getKsi();
-        String mass = request.getMass();
-        String result = dataService.getResult(ksi, mass);
-        // create response
-        return new WsOnePointResponse(ksi, mass, result);
+    public ResponseEntity<?> onGetResult(@Valid @RequestBody WsOnePointRequest request) {
+        try {
+            String ksi = request.getKsi();
+            String mass = request.getMass();
+            String result = dataService.getResult(ksi, mass);
+            // create response
+            return ResponseEntity.ok(new WsOnePointResponse(ksi, mass, result));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @MessageMapping("/get-data-all")
@@ -57,5 +66,10 @@ public class WebSocketController {
         Map<String, String> result = dataService.getAllResults(ksi);
         // create response -> serialize Response class
         return new WsPointsResponse(ksi, result);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public String databaseError() {
+        return "databaseError";
     }
 }

@@ -56,18 +56,23 @@ export class MainGraph {
 
     private receiveData(response) {
         if (response.body) {
-            let res = JSON.parse(response.body);
-            console.log(response.body);
-            if (!res.result) {
-                console.log('Result is null for ksi: ' + res.ksi + " mass: " + res.mass);
-                return;
+            let resObject = JSON.parse(response.body);
+            if (resObject.statusCodeValue === 200) {
+                let res = resObject.body;
+                console.log(response.body);
+                if (!res.result) {
+                    console.log('Result is null for ksi: ' + res.ksi + " mass: " + res.mass);
+                    return;
+                }
+                let line = LinePoints.pointToFloat([res.mass, res.result]);
+                if (line[1] < this.domainY[0]) {
+                    line[1] = this.domainY[0];
+                }
+                this.webSocketService.pointReceived();
+                this.container.setPoint(line, res.ksi);
+            } else {
+                this.webSocketService.pointReceivedWithError();
             }
-            let line = LinePoints.pointToFloat([res.mass, res.result]);
-            if (line[1] < this.domainY[0]) {
-                line[1] = this.domainY[0];
-            }
-            this.webSocketService.pointReceived();
-            this.container.setPoint(line, res.ksi);
           }
     }
 
