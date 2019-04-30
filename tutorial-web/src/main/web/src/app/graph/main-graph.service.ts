@@ -108,7 +108,9 @@ import {WebsoketService} from "../service/websoket.service";
     }
 
     public requestLine(ksi) {
-        this.mainGraphInstance.requestWholeLine(ksi);
+        if (!this.getLinesInfo().includes(ksi)) {
+            this.mainGraphInstance.requestWholeLine(ksi);
+        }
     }
 
     public removeLine(ksi) {
