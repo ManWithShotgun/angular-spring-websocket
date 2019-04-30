@@ -21,22 +21,12 @@
         </div>
       </div>
       <!-- lines section -->
-      <div class="row row-line">
+      <div class="row row-line" *ngFor="let ksi of mainGraphService.getLinesInfo()">
         <div class="col mat-stroked-button col-line">
-            <p>Line ksi 0.005 </p>
+            <p>Line ksi {{ ksi }} </p>
         </div>
         <div class="col">
-          <button mat-icon-button color="warn">
-            <mat-icon>highlight_off</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="row row-line">
-        <div class="col mat-stroked-button col-line">
-            <p>Line ksi 0.005 </p>
-        </div>
-        <div class="col">
-          <button mat-icon-button color="warn">
+          <button mat-icon-button color="warn" (click)="mainGraphService.removeLine(ksi)">
             <mat-icon>highlight_off</mat-icon>
           </button>
         </div>

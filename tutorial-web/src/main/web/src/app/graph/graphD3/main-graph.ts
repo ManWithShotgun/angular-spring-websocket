@@ -6,6 +6,7 @@ import {FocusModule} from './impl/focus-module';
 import {WebsoketService} from "../../service/websoket.service";
 import { LedgedConfig } from './legend-config';
 import { LinePoints } from './line-points';
+import { SSMLine } from './impl/ssm-line';
 
 export class MainGraph {
 
@@ -177,6 +178,10 @@ export class MainGraph {
         new FocusModule(width, height, this.domainX, this.domainY);
         // disable loading
         
+    }
+
+    public getLinesKsi(): Array<string> {
+        return Array.from(this.container.getLines().keys());
     }
 
     private renderObserved(data) {

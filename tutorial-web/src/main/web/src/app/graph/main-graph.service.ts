@@ -97,8 +97,20 @@ import {WebsoketService} from "../service/websoket.service";
 
         this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
         this.mainGraphInstance.init(dataRef);
-        this.mainGraphInstance.requestWholeLine('0.001');
-        // main.requestWholeLine('0.0002');
+        this.requestLine('0.001');
+    }
+
+    public getLinesInfo(): Array<string> {
+        return this.mainGraphInstance.getLinesKsi();
+    }
+
+    public requestLine(ksi) {
+        this.mainGraphInstance.requestWholeLine(ksi);
+    }
+
+    public removeLine(ksi) {
+        // 
+        console.log('Remove: ' + ksi);
     }
 
 

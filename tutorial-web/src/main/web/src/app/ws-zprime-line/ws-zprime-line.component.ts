@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MainGraphService } from '../graph/main-graph.service';
 
 @Component({
   selector: 'app-ws-zprime-line',
@@ -12,9 +13,10 @@ export class WsZprimeLineComponent implements OnInit {
     ksi: [null, Validators.required],
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, public mainGraphService: MainGraphService) { }
 
   ngOnInit() {
+    this.mainGraphService.getLinesInfo();
   }
 
 }

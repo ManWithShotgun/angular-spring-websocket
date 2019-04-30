@@ -23,6 +23,10 @@ export class SSMContainer {
         SSMContainer.context = this;
     }
 
+    public getLines(): Map<string, SSMLine> {
+        return this.lines;
+    }
+
     public addLine(ksi) {
         let lineNumber: number = this.lines.size;
 
