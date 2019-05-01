@@ -78,13 +78,16 @@ export class MainGraph {
 
     private receiveWholeLine(response) {
         if (response.body) {
-            // before render the data should be converted and sorted
-            let res = JSON.parse(response.body);
-            let line = new LinePoints(res.result);
-            console.log('render line with ksi = ' + res.ksi);
-            this.container.setData(line, res.ksi);
-            this.requestMissingPointsOfLine(res.ksi, line);
-          }
+            let resObject = JSON.parse(response.body);
+            if (resObject.statusCodeValue === 200) {
+                // before render the data should be converted and sorted
+                let res = resObject.body;
+                let line = new LinePoints(res.result);
+                console.log('render line with ksi = ' + res.ksi);
+                this.container.setData(line, res.ksi);
+                this.requestMissingPointsOfLine(res.ksi, line);
+            }
+        }   
     }
 
     private requestMissingPointsOfLine(ksi, line: LinePoints): void {
