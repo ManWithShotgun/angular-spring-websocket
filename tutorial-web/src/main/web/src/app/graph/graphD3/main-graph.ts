@@ -7,6 +7,7 @@ import {WebsoketService} from "../../service/websoket.service";
 import { LedgedConfig } from './legend-config';
 import { LinePoints } from './line-points';
 import { SSMLine } from './impl/ssm-line';
+import { GraphSataticData } from './graph-static-data';
 
 export class MainGraph {
 
@@ -59,7 +60,6 @@ export class MainGraph {
             let resObject = JSON.parse(response.body);
             if (resObject.statusCodeValue === 200) {
                 let res = resObject.body;
-                console.log(response.body);
                 if (!res.result) {
                     console.log('Result is null for ksi: ' + res.ksi + " mass: " + res.mass);
                     return;
@@ -83,7 +83,6 @@ export class MainGraph {
                 // before render the data should be converted and sorted
                 let res = resObject.body;
                 let line = new LinePoints(res.result);
-                console.log('render line with ksi = ' + res.ksi);
                 this.container.setData(line, res.ksi);
                 this.requestMissingPointsOfLine(res.ksi, line);
             }
@@ -106,7 +105,7 @@ export class MainGraph {
         }
     }
 
-    public init(dataRef) {
+    public init() {
         let margin = {top: 20, right: 30, bottom: 60, left: 60},
             width = 760 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
@@ -177,9 +176,6 @@ export class MainGraph {
             .attr("transform", "translate(-" + margin.right + "," + height/2 + ") rotate(270)")
             .text("...(pb)"); 
 
-        this.renderRef(dataRef);
-
-
         // render main legend
         MainGraph.renderSvg({
             x: 300,
@@ -189,20 +185,18 @@ export class MainGraph {
             href: 'https://cdn1.savepice.ru/uploads/2017/11/9/23a327011c5f481a636de5fefb242ca0-full.png'
         });
 
-        
-
         this.container = new SSMContainer();
 
+        this.renderExpectedArea(GraphSataticData.getExpectedData());
+        this.renderRef(GraphSataticData.getReferenceModelData());
         new FocusModule(width, height, this.domainX, this.domainY);
-        // disable loading
-        
     }
 
     public getLinesKsi(): Array<string> {
         return Array.from(this.container.getLines().keys());
     }
 
-    private renderObserved(data) {
+    public renderExpectedArea(data) {
         new GraphArea({
             data,
             class: 'yellow-area',
@@ -213,14 +207,18 @@ export class MainGraph {
             class: 'green-area',
             offset: 15
         });
+        MainGraph.svg.append("path")
+		    .datum(data)
+            .attr("class", "line-ref")
+            .attr("d", MainGraph.logPen);
     }
 
-    private renderExpected(data) {
+    private renderObserved(data) {
         // rend line
         // rend areas
     }
 
-    private renderRef(data) {
+    public renderRef(data) {
         let textConfig = new LedgedConfig('Reference model', 70, 40);
         textConfig.setCssClass('ref-text');
         new GraphText(textConfig);
