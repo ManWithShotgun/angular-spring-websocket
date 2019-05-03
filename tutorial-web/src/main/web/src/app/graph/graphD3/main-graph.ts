@@ -163,26 +163,31 @@ export class MainGraph {
             .style("font-size", "8px")
             .call(yAxisSub);
 
-        // x sign
-        MainGraph.svg.append("text")
-            .attr("class", 'axis-sign')
-            .attr("x", width/2 - 50)         
-            .attr("y", height + 40)     
-            .text("Mz(GeV)");
-        // y sign 
-        MainGraph.svg.append("text")
-            .attr("class", 'axis-sign')
-            .attr("text-anchor", "middle")
-            .attr("transform", "translate(-" + margin.right + "," + height/2 + ") rotate(270)")
-            .text("...(pb)"); 
-
         // render main legend
         MainGraph.renderSvg({
             x: 300,
             y: -150,
             width: 400,
             height: 400,
-            href: 'https://cdn1.savepice.ru/uploads/2017/11/9/23a327011c5f481a636de5fefb242ca0-full.png'
+            href: 'https://i.imgur.com/GBsjqgs.png'
+        });
+
+        // y sign 
+        MainGraph.renderSvg({
+            x: -160,
+            y: 100,
+            width: 250,
+            height: 250,
+            href: 'https://i.imgur.com/vuLA2Os.png'
+        });
+
+        // x sign
+        MainGraph.renderSvg({
+            x: 300,
+            y: 403,
+            width: 100,
+            height: 100,
+            href: 'https://i.imgur.com/uFOY07U.png'
         });
 
         this.container = new SSMContainer();

@@ -1,6 +1,10 @@
 body {
-    font: 10px sans-serif;
-  }
+  font: 10px sans-serif;
+}
+
+.svg-graph {
+  background-color: white;
+}
   
   .axis path,
   .axis line {
@@ -79,9 +83,5 @@ body {
   .ssm-text {
     fill: #ff4a4a;
     font-size: 18px;
-  }
-  .axis-sign {
-    stroke: black;
-    font-size: 22px;
   }
   
