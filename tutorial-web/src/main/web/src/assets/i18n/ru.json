@@ -2,5 +2,8 @@
   "HOME": {
     "TITLE": "хом тайтл!",
     "SELECT": "FR Changer la langue"
+  },
+  "WELCOME": {
+    "CHAPTER": ""
   }
 }

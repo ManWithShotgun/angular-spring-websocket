@@ -24,7 +24,11 @@ import { WsZprimeStatComponent } from './ws-zprime-stat/ws-zprime-stat.component
 const appRoutes: Routes = [
   { path: 'welcome', component: FormComponent },
   { path: 'graph-2', component: Graph },
-  { path: 'statistic', component: DashboardComponent }
+  { path: 'statistic', component: DashboardComponent },
+  { path: '',
+    redirectTo: '/welcome',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
