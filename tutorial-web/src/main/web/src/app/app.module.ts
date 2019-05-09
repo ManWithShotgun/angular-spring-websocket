@@ -6,7 +6,6 @@ import { NgxLanguageSelectorModule } from 'ngx-language-selector';
 
 import { AppComponent } from './app.component';
 import { Graph } from './graph/graph.component';
-import { Control } from './controller/control.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,7 +31,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, Graph, Control, NavigationComponent, WsControlComponent, WsZprimeLineComponent, WsZprimePointComponent, WsZprimeStatComponent, WelcomeComponent
+    AppComponent, Graph, NavigationComponent, WsControlComponent, WsZprimeLineComponent, WsZprimePointComponent, WsZprimeStatComponent, WelcomeComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
