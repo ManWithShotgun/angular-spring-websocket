@@ -13,18 +13,17 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatInputModule, MatSelectModule, MatRadioModule } from '@angular/material';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatBadgeModule} from '@angular/material/badge';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WsControlComponent } from './ws-control/ws-control.component';
 import { WsZprimeLineComponent } from './ws-zprime-line/ws-zprime-line.component';
 import { WsZprimePointComponent } from './ws-zprime-point/ws-zprime-point.component';
 import { WsZprimeStatComponent } from './ws-zprime-stat/ws-zprime-stat.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
-  { path: 'welcome', component: FormComponent },
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'graph-2', component: Graph },
-  { path: 'statistic', component: DashboardComponent },
+  { path: 'statistic', component: WelcomeComponent },
   { path: '',
     redirectTo: '/welcome',
     pathMatch: 'full'
@@ -33,7 +32,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, Graph, Control, NavigationComponent, DashboardComponent, FormComponent, WsControlComponent, WsZprimeLineComponent, WsZprimePointComponent, WsZprimeStatComponent
+    AppComponent, Graph, Control, NavigationComponent, WsControlComponent, WsZprimeLineComponent, WsZprimePointComponent, WsZprimeStatComponent, WelcomeComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
