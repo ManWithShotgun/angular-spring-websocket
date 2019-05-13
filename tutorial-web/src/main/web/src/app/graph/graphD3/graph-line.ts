@@ -52,6 +52,9 @@ export class GraphLine {
         }
         if (insertIndex > -1) {
             this.data.splice(insertIndex, 0, point);
+        } else {
+            // the point mass more then mass of another points in line
+            this.data.push(point);
         }
         this.setData(this.data);
     }
