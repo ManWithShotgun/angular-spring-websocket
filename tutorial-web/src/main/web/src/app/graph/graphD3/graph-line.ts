@@ -31,6 +31,12 @@ export class GraphLine {
     }
 
     public setData(data) {
+        for(let i = 0; i < data.length; i++) {
+            // value is 0 the graphic will broken because 0 less then 10^-4 and it is broking
+            if (data[i][1] === 0) {
+                data[i][1] = 1;
+            }
+        }
         this.data = data;
         this.lienView.datum(this.data);
         this.lienView.attr("d", this.line);
