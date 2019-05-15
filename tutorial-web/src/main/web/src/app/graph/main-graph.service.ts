@@ -21,7 +21,7 @@ import {WebsoketService} from "../service/websoket.service";
     public renderMain() {
         this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
         this.mainGraphInstance.init();
-        this.requestLine('0.001');
+        this.requestLine('0.01');
     }
 
     public getLinesInfo(): Array<string> {

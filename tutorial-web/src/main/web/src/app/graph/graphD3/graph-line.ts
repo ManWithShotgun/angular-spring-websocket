@@ -34,7 +34,7 @@ export class GraphLine {
         for(let i = 0; i < data.length; i++) {
             // value is 0 the graphic will broken because 0 less then 10^-4 and it is broking
             if (data[i][1] === 0) {
-                data[i][1] = 1;
+                data[i][1] = 0.0001;
             }
         }
         this.data = data;

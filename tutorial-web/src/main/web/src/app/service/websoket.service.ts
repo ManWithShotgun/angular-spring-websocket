@@ -10,7 +10,9 @@ export class WebsoketService {
   private requestsInProgress = 0;
   private requestsCompleted = 0;
   private requestsFailed = 0;
-  private requestsLimit = 2;
+  private requestsLimit = 10;
+  private pythiaEvents = 10000;
+  private pointCalculationQuantity = 10;
   private serverUrl = environment.wsScoketUrl
   private stompClientPromise;
   private stompClient;
@@ -65,6 +67,14 @@ export class WebsoketService {
     return this.requestsLimit;
   }
 
+  public getPythiaEvents(): number {
+    return this.pythiaEvents;
+  }
+
+  public getPointCalculationQuantity(): number {
+    return this.pointCalculationQuantity;
+  }
+
   // This is not save when commection was lost; Should chech CONNECTED status for client and if need reconnect
   public getConnection(): Promise<any> {
     return this.stompClientPromise;
@@ -77,7 +87,7 @@ export class WebsoketService {
         return stompClient;
       }
       this.requestsInProgress++;
-      stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass }));
+      stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass, events: this.getPythiaEvents(), pointCalculationQuantity: this.getPointCalculationQuantity() }));
       return stompClient;
     });
   }

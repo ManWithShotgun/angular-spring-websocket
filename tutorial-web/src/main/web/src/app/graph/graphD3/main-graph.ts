@@ -98,7 +98,7 @@ export class MainGraph {
         let endMass = 5000;
         let step = 100;
         let calculatedMass = line.getData().map(point => point[0]);
-        for(startMass = 0; startMass <= endMass; startMass += step) {
+        for(startMass = 100; startMass <= endMass; startMass += step) {
             if (!calculatedMass.includes(startMass)) {
                 this.webSocketService.getData(ksi, startMass);
             }
