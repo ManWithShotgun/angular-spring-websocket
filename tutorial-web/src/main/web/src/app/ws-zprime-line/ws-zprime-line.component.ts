@@ -12,6 +12,8 @@ export class WsZprimeLineComponent implements OnInit {
 
   requestData = this.fb.group({
     ksi: [null, [Validators.required, DoubleValidator.isDouble]],
+    events: [null, [Validators.required]],
+    cycles: [null, [Validators.required]],
   });
 
   constructor(private fb: FormBuilder, public mainGraphService: MainGraphService) { }
@@ -22,7 +24,15 @@ export class WsZprimeLineComponent implements OnInit {
 
 
   public requestLine() {
-    this.mainGraphService.requestLine(this.requestData.controls.ksi.value);
+    this.mainGraphService.requestLine(
+      this.requestData.controls.ksi.value,
+      this.requestData.controls.events.value,
+      this.requestData.controls.cycles.value,
+    );
+  }
+
+  public removeLine(lineKey) {
+    this.mainGraphService.removeLine(lineKey);
   }
 
 }

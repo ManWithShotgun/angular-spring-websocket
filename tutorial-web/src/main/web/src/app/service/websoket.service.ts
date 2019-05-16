@@ -11,8 +11,6 @@ export class WebsoketService {
   private requestsCompleted = 0;
   private requestsFailed = 0;
   private requestsLimit = 10;
-  private pythiaEvents = 10000;
-  private pointCalculationQuantity = 10;
   private serverUrl = environment.wsScoketUrl
   private stompClientPromise;
   private stompClient;
@@ -48,7 +46,7 @@ export class WebsoketService {
       return;
     }
     const request: any = this.queue.shift();
-    this.getData(request.ksi, request.mass);
+    this.getData(request.ksi, request.events, request.cycles, request.mass);
   }
 
   public getQueueLength(): number {
@@ -67,34 +65,26 @@ export class WebsoketService {
     return this.requestsLimit;
   }
 
-  public getPythiaEvents(): number {
-    return this.pythiaEvents;
-  }
-
-  public getPointCalculationQuantity(): number {
-    return this.pointCalculationQuantity;
-  }
-
   // This is not save when commection was lost; Should chech CONNECTED status for client and if need reconnect
   public getConnection(): Promise<any> {
     return this.stompClientPromise;
   }
 
-  getData(ksi, mass): void {
+  getData(ksi, events, cycles, mass): void {
     this.getConnection().then(stompClient => {
       if (this.getRequestsInProgress() >= this.getRequestsLimit()) {
-        this.queue.push({ksi, mass});
+        this.queue.push({ksi, events, cycles, mass});
         return stompClient;
       }
       this.requestsInProgress++;
-      stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass, events: this.getPythiaEvents(), pointCalculationQuantity: this.getPointCalculationQuantity() }));
+      stompClient.send("/app/get-data", {}, JSON.stringify({ ksi, mass, events, cycles }));
       return stompClient;
     });
   }
 
-  getWholeLineData(ksi): void {
+  getWholeLineData(ksi, events, cycles): void {
     this.getConnection().then(stompClient => {
-      stompClient.send("/app/get-data-all", {}, JSON.stringify({ ksi }));
+      stompClient.send("/app/get-data-all", {}, JSON.stringify({ ksi, events, cycles }));
       return stompClient;
     });
   }

@@ -21,22 +21,23 @@ import {WebsoketService} from "../service/websoket.service";
     public renderMain() {
         this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
         this.mainGraphInstance.init();
-        this.requestLine('0.01');
+        this.requestLine('0.01', '3000', '1');
     }
 
     public getLinesInfo(): Array<string> {
         return this.mainGraphInstance.getLinesKsi();
     }
 
-    public requestLine(ksi) {
-        if (!this.getLinesInfo().includes(ksi)) {
-            this.mainGraphInstance.requestWholeLine(ksi);
+    public requestLine(ksi, events, cycles) {
+        let lineInfo = this.mainGraphInstance.createLineInfo(ksi, events, cycles);
+        if (!this.getLinesInfo().includes(lineInfo)) {
+            this.mainGraphInstance.requestWholeLine(ksi, events, cycles);
         }
     }
 
-    public removeLine(ksi) {
+    public removeLine(lineKey) {
         // 
-        console.log('Remove: ' + ksi);
+        console.log('Remove: ' + lineKey);
     }
 
 

@@ -50,9 +50,9 @@ export class MainGraph {
     }
 
     // Request to backend
-    public requestWholeLine(ksi) {
-        this.container.addLine(ksi)
-        this.webSocketService.getWholeLineData(ksi);
+    public requestWholeLine(ksi, events, cycles) {
+        this.container.addLine(ksi, events, cycles)
+        this.webSocketService.getWholeLineData(ksi, events, cycles);
     }
 
     private receiveData(response) {
@@ -69,7 +69,7 @@ export class MainGraph {
                     line[1] = this.domainY[0];
                 }
                 this.webSocketService.pointReceived();
-                this.container.setPoint(line, res.ksi);
+                this.container.setPoint(line, res.ksi, res.events, res.cycles);
             } else {
                 this.webSocketService.pointReceivedWithError();
             }
@@ -83,13 +83,13 @@ export class MainGraph {
                 // before render the data should be converted and sorted
                 let res = resObject.body;
                 let line = new LinePoints(res.result);
-                this.container.setData(line, res.ksi);
-                this.requestMissingPointsOfLine(res.ksi, line);
+                this.container.setData(line, res.ksi, res.events, res.cycles);
+                this.requestMissingPointsOfLine(res.ksi, res.events, res.cycles, line);
             }
         }   
     }
 
-    private requestMissingPointsOfLine(ksi, line: LinePoints): void {
+    private requestMissingPointsOfLine(ksi, events, cycles, line: LinePoints): void {
         // send requests based on config:
         // 1. step between points
         // 2. start mass (0)
@@ -100,7 +100,7 @@ export class MainGraph {
         let calculatedMass = line.getData().map(point => point[0]);
         for(startMass = 100; startMass <= endMass; startMass += step) {
             if (!calculatedMass.includes(startMass)) {
-                this.webSocketService.getData(ksi, startMass);
+                this.webSocketService.getData(ksi, events, cycles, startMass);
             }
         }
     }
@@ -198,7 +198,16 @@ export class MainGraph {
     }
 
     public getLinesKsi(): Array<string> {
+        // TODO: get events + cycles
         return Array.from(this.container.getLines().keys());
+    }
+
+    public createLineInfo(ksi, events, cycles): string {
+        return ksi + '(Events: ' + events + ' Cycles: ' + cycles + ')';
+    }
+
+    public removeLine(lineKey): void {
+        this.container.removeData(lineKey);
     }
 
     public renderExpectedArea(data) {

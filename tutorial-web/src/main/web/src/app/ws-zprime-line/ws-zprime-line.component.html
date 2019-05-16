@@ -23,6 +23,31 @@
           </mat-card-actions>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Count of modulated collision events" formControlName="events">
+            <mat-error *ngIf="requestData.controls['events'].hasError('required')">
+              Ksi is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="requestData.controls['events'].hasError('isNotDouble')">
+              Ksi should be <strong>a double</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Count of recalculation a point with random seed" formControlName="cycles">
+            <mat-error *ngIf="requestData.controls['cycles'].hasError('required')">
+              Ksi is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="requestData.controls['cycles'].hasError('isNotDouble')">
+              Ksi should be <strong>a double</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          
+        </div>
+      </div>
     </form>
     <!-- lines section -->
     <div class="row row-line" *ngFor="let ksi of mainGraphService.getLinesInfo()">
@@ -30,7 +55,7 @@
           <p>Line ksi {{ ksi }} </p>
       </div>
       <div class="col">
-        <button mat-icon-button color="warn" (click)="mainGraphService.removeLine(ksi)">
+        <button mat-icon-button color="warn" (click)="removeLine(ksi)">
           <mat-icon>highlight_off</mat-icon>
         </button>
       </div>

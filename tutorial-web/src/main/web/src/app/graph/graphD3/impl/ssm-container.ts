@@ -27,7 +27,7 @@ export class SSMContainer {
         return this.lines;
     }
 
-    public addLine(ksi) {
+    public addLine(ksi, events, cycles) {
         let lineNumber: number = this.lines.size;
 
         // set legend config
@@ -46,15 +46,20 @@ export class SSMContainer {
             lineConfig.setTextConfig(textConfig);
         }
         let line = new SSMLine(lineConfig);
-        this.lines.set(ksi, line);
+        this.lines.set(ksi + '_' + events + '_' + cycles, line);
     }
 
-    public setData(line: LinePoints, ksi) {
-        this.lines.get(ksi).setData(line.getData());
+    public setData(line: LinePoints, ksi, events, cycles) {
+        this.lines.get(ksi + '_' + events + '_' + cycles).setData(line.getData());
     }
 
-    public setPoint(point, ksi) {
-        this.lines.get(ksi).setPoint(point);
+    public setPoint(point, ksi, events, cycles) {
+        this.lines.get(ksi + '_' + events + '_' + cycles).setPoint(point);
+    }
+
+    public removeData(lineKey) {
+        // this.lines.get(lineKey).
+        this.lines.delete(lineKey);
     }
 
     public static updateX(x0) {

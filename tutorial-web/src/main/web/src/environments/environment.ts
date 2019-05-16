@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  wsScoketUrl: 'http://localhost:8090/socket'
+  wsScoketUrl: 'http://localhost:8080/socket'
 };
 
 /*
