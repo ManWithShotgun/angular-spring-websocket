@@ -58,7 +58,7 @@ export class SSMContainer {
     }
 
     public removeData(lineKey) {
-        // this.lines.get(lineKey).
+        this.lines.get(lineKey).delete();
         this.lines.delete(lineKey);
     }
 

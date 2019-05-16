@@ -42,6 +42,12 @@ export class SSMLine extends GraphLine {
         //
     }
 
+    public delete(): void {
+        this.removeData();
+        this.focusGroup[0][0].remove();
+        this.legendView.delete();
+    }
+
     public updateX(x): void {
         let i = this.bisectDate(this.data, x, 1);
         if (i < this.data.length) {

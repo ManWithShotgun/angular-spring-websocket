@@ -22,6 +22,7 @@ import {WebsoketService} from "../service/websoket.service";
         this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
         this.mainGraphInstance.init();
         this.requestLine('0.01', '3000', '1');
+        this.requestLine('0.005', '3000', '1');
     }
 
     public getLinesInfo(): Array<string> {
@@ -36,8 +37,8 @@ import {WebsoketService} from "../service/websoket.service";
     }
 
     public removeLine(lineKey) {
-        // 
         console.log('Remove: ' + lineKey);
+        this.mainGraphInstance.removeLine(lineKey);
     }
 
 

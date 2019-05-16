@@ -5,7 +5,7 @@ import { LineConfig } from './line-config';
 export class GraphLine {
     
     private line;
-    private lienView;
+    private lineView;
 
     protected data: any[] = [];
 
@@ -17,17 +17,17 @@ export class GraphLine {
         this.line.interpolate(lineConfig.getInterpilate());
 
         // TODO-ilia remove in css class
-        this.lienView = MainGraph.svg.append("path").style("stroke-dasharray", ("7, 4, 4, 4"));
+        this.lineView = MainGraph.svg.append("path").style("stroke-dasharray", ("7, 4, 4, 4"));
         if (lineConfig.getData()) {
             this.data = lineConfig.getData();
             // add data
-            this.lienView.datum(this.data);
+            this.lineView.datum(this.data);
             // start render
-            this.lienView.attr("d", this.line);
+            this.lineView.attr("d", this.line);
 
         }
         // css class necessary
-        this.lienView.attr("class", lineConfig.getCssClass());
+        this.lineView.attr("class", lineConfig.getCssClass());
     }
 
     public setData(data) {
@@ -38,8 +38,12 @@ export class GraphLine {
             }
         }
         this.data = data;
-        this.lienView.datum(this.data);
-        this.lienView.attr("d", this.line);
+        this.lineView.datum(this.data);
+        this.lineView.attr("d", this.line);
+    }
+
+    public removeData() {
+        this.lineView[0][0].remove();
     }
 
     public setPoint(point) {

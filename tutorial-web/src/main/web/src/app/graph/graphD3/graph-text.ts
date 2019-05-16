@@ -18,6 +18,10 @@ export class GraphText {
             .text(this.textSign.text);
     }
 
+    public delete(): void {
+        this.textView[0][0].remove();
+    }
+
     public updateText(text) {
         this.textSign.text = text;
         this.textView.text(this.textSign.text);
