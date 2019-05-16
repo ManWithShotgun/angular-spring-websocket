@@ -65,6 +65,10 @@ export class SSMLine extends GraphLine {
         this.legendView.updateText(this.legendText + ' ' + this.formatValueY(d[1]));
     }
 
+    public updateLegendPosition(x, y) {
+        this.legendView.updateTextPosition(x, y);
+    }
+
     private updateFocus(d) {
         this.focusGroup.attr("transform", "translate(" + MainGraph.x(d[0]) + "," + MainGraph.y(d[1]) + ")");
         this.focusGroup.style("display", null);

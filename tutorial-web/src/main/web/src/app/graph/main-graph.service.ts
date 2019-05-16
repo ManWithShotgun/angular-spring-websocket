@@ -23,6 +23,7 @@ import {WebsoketService} from "../service/websoket.service";
         this.mainGraphInstance.init();
         this.requestLine('0.01', '3000', '1');
         this.requestLine('0.005', '3000', '1');
+        this.requestLine('0.001', '3000', '1');
     }
 
     public getLinesInfo(): Array<string> {

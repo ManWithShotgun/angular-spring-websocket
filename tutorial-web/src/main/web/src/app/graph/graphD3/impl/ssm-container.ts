@@ -60,6 +60,11 @@ export class SSMContainer {
     public removeData(lineKey) {
         this.lines.get(lineKey).delete();
         this.lines.delete(lineKey);
+        let i = 0;
+        this.lines.forEach(line => {
+            line.updateLegendPosition(SSMContainer.LEGEND_START_X, SSMContainer.LEGEND_START_Y + SSMContainer.LEGEND_STEP_Y * i);
+            i++;
+        });
     }
 
     public static updateX(x0) {

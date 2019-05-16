@@ -26,4 +26,11 @@ export class GraphText {
         this.textSign.text = text;
         this.textView.text(this.textSign.text);
     }
+
+    public updateTextPosition(x, y) {
+        this.textSign.x = x;
+        this.textSign.y = y;
+        this.textView.attr("x", this.textSign.x);   
+        this.textView.attr("y", this.textSign.y);     
+    }
 }
