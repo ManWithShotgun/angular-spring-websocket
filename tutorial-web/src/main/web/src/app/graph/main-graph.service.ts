@@ -8,7 +8,8 @@ import {WebsoketService} from "../service/websoket.service";
 })
     export class MainGraphService {
 
-    private mainGraphSelector: string = 'div#svg';
+    private MAIN_GRAPH_SELECTOR: string = 'div#svg';
+    private LOCAL_STORAGE_PREFERENCES_KEY: string = 'preferences';
     private mainGraphInstance: MainGraph;
 
     constructor(private websoketService: WebsoketService) {
@@ -19,11 +20,25 @@ import {WebsoketService} from "../service/websoket.service";
     }
 
     public renderMain() {
-        this.mainGraphInstance = new MainGraph(this.mainGraphSelector, this.websoketService);
+        this.mainGraphInstance = new MainGraph(this.MAIN_GRAPH_SELECTOR, this.websoketService);
         this.mainGraphInstance.init();
-        this.requestLine('0.01', '3000', '1');
-        this.requestLine('0.005', '3000', '1');
-        this.requestLine('0.001', '3000', '1');
+        // render preference
+        this.requestPreferenceLines();
+        // this.requestLine('0.01', '3000', '1');
+        // this.requestLine('0.005', '3000', '1');
+        // this.requestLine('0.001', '3000', '1');
+    }
+
+    public requestPreferenceLines() {
+        // TODO: make get set method for use JSON and local storage
+        let preferences = JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_PREFERENCES_KEY));
+        if (!preferences) {
+            return;
+        }
+        preferences.forEach(lineKey => {
+            let lineInfo = lineKey.split('_');
+            this.requestLine(lineInfo[0], lineInfo[1], lineInfo[2]);
+        });
     }
 
     public getLinesInfo(): Array<string> {
@@ -31,14 +46,32 @@ import {WebsoketService} from "../service/websoket.service";
     }
 
     public requestLine(ksi, events, cycles) {
-        let lineInfo = this.mainGraphInstance.createLineInfo(ksi, events, cycles);
-        if (!this.getLinesInfo().includes(lineInfo)) {
+        let lineKey = ksi + '_' + events + '_' + cycles;
+        if (!this.getLinesInfo().includes(lineKey)) {
+            this.addPreference(lineKey);
             this.mainGraphInstance.requestWholeLine(ksi, events, cycles);
         }
     }
 
+    public addPreference(lineKey) {
+        let preferences = JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_PREFERENCES_KEY));
+        if (!preferences) {
+            preferences = [];
+        }
+        preferences.push(lineKey);
+        localStorage.setItem(this.LOCAL_STORAGE_PREFERENCES_KEY, JSON.stringify(preferences));
+    }
+
+    public removePreference(lineKey) {
+        let preferences = JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_PREFERENCES_KEY));
+        let index = preferences.indexOf(lineKey);
+        preferences.splice(index, 1);
+        localStorage.setItem(this.LOCAL_STORAGE_PREFERENCES_KEY, JSON.stringify(preferences));
+    }
+
     public removeLine(lineKey) {
         console.log('Remove: ' + lineKey);
+        this.removePreference(lineKey);
         this.mainGraphInstance.removeLine(lineKey);
     }
 
