@@ -50,12 +50,12 @@
       </div>
     </form>
     <!-- lines section -->
-    <div class="row row-line" *ngFor="let ksi of mainGraphService.getLinesInfo()">
+    <div class="row row-line" *ngFor="let ksi of getLinesInfo()" (click)="removeLine(ksi.key)">
       <div class="col mat-stroked-button col-line">
-          <p>Line ksi {{ ksi }} </p>
+          <p>Line KSI {{ ksi.label }} </p>
       </div>
       <div class="col">
-        <button mat-icon-button color="warn" (click)="removeLine(ksi)">
+        <button type="button" mat-icon-button color="warn" (click)="removeLine(ksi.key)">
           <mat-icon>highlight_off</mat-icon>
         </button>
       </div>

@@ -19,7 +19,7 @@ export class WsZprimeLineComponent implements OnInit {
   constructor(private fb: FormBuilder, public mainGraphService: MainGraphService) { }
 
   ngOnInit() {
-    this.mainGraphService.getLinesInfo();
+    
   }
 
 
@@ -33,6 +33,16 @@ export class WsZprimeLineComponent implements OnInit {
 
   public removeLine(lineKey) {
     this.mainGraphService.removeLine(lineKey);
+  }
+
+  public getLinesInfo() {
+    return this.mainGraphService.getLinesInfo()
+    .map(lineKey => {
+      let info = lineKey.split('_');
+      let label = info[0] + ' (Events: ' + info[1] + ' Cycles: ' + info[2] + ')';
+      return {label, key: lineKey};
+      // return label;
+    });
   }
 
 }
