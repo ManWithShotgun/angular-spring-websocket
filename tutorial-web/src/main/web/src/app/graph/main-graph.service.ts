@@ -24,9 +24,6 @@ import {WebsoketService} from "../service/websoket.service";
         this.mainGraphInstance.init();
         // render preference
         this.requestPreferenceLines();
-        // this.requestLine('0.01', '3000', '1');
-        // this.requestLine('0.005', '3000', '1');
-        // this.requestLine('0.001', '3000', '1');
     }
 
     public requestPreferenceLines() {
@@ -37,7 +34,7 @@ import {WebsoketService} from "../service/websoket.service";
         }
         preferences.forEach(lineKey => {
             let lineInfo = lineKey.split('_');
-            this.requestLine(lineInfo[0], lineInfo[1], lineInfo[2]);
+            this.mainGraphInstance.requestWholeLine(lineInfo[0], lineInfo[1], lineInfo[2]);
         });
     }
 

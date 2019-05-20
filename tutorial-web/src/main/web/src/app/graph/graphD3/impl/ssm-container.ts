@@ -18,7 +18,7 @@ export class SSMContainer {
     private lines: Map<string, SSMLine> = new Map();
 
     constructor() {
-        this.lendgesForLines.set('0.001', {x: 170, y: 140});
+        this.lendgesForLines.set('0.01', {x: 180, y: 70});
         this.lendgesForLines.set('0.0002', {x: 270, y: 140});
         SSMContainer.context = this;
     }
