@@ -68,6 +68,17 @@ body {
     stroke: orange;
     stroke-width: 1.5px;
   }
+  .line-expected {
+    fill: none;
+    stroke: black;
+    stroke-dasharray: 7, 4, 4, 4;
+    stroke-width: 1.5px;
+  }
+  .line-observed {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5px;
+  }
   .green-area {
     fill: rgb(27, 255, 0);
   }

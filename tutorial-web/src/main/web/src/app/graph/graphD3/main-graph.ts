@@ -194,6 +194,7 @@ export class MainGraph {
 
         this.renderExpectedArea(GraphSataticData.getExpectedData());
         this.renderRef(GraphSataticData.getReferenceModelData());
+        this.renderObserved(GraphSataticData.getObservedData());
         new FocusModule(width, height, this.domainX, this.domainY);
     }
 
@@ -223,21 +224,30 @@ export class MainGraph {
         });
         MainGraph.svg.append("path")
 		    .datum(data)
-            .attr("class", "line-ref")
+            .attr("class", "line-expected")
             .attr("d", MainGraph.logPen);
     }
 
     private renderObserved(data) {
         // rend line
-        // rend areas
+        MainGraph.svg.append("path")
+		    .datum(data)
+            .attr("class", "line-observed")
+            .attr("d", MainGraph.logPen);
+
+        MainGraph.svg.selectAll(".circle")
+            .data(data)
+            .enter().append("circle")
+            .attr("cx", MainGraph.logPen.x())
+            .attr("cy", MainGraph.logPen.y())
+            .style("fill", "black")
+            .attr("r", 3);
     }
 
     public renderRef(data) {
         let textConfig = new LedgedConfig('Reference model', 70, 40);
         textConfig.setCssClass('ref-text');
         new GraphText(textConfig);
-
-        let temp = MainGraph.svg.selectAll(".rectangles");
 
         MainGraph.svg.append("path")
 		    .datum(data)
